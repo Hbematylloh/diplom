@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Экзамен ПДД 2026 - как в ГИБДД{% endblock %} {% block content %}
+<div class="container">
+    <!-- Хлебные крошки для навигации -->
+    <div class="breadcrumbs">
+        <a href="{{ url_for('index') }}">Главная</a> →
+        <span>Экзамен ПДД онлайн</span>
+    </div>
+
+    <!-- Информационный блок -->
+    <div class="exam-info">
+        <h2>Экзамен как в ГИБДД</h2>
+        <p>Решайте официальные билеты ПДД 2026 прямо на нашем сайте. Интерфейс полностью повторяет реальный экзамен в ГИБДД.</p>
+    </div>
+
+    <!-- Виджет экзамена (без прокрутки) -->
+    <div class="widget-container">
+        <iframe src="https://pdd-exam.ru/gibdd-exam/" width="100%" height="1200" frameborder="0" scrolling="no" title="Экзамен ПДД онлайн" loading="lazy" style="overflow: hidden;">
+        </iframe>
+    </div>
+
+    <!-- Дополнительная информация -->
+    <div class="exam-footer">
+        <p class="note">
+            <small>Источник: <a href="https://pdd-exam.ru/" target="_blank">PDD-EXAM.RU</a> — официальные билеты ГИБДД РФ</small>
+        </p>
+    </div>
+</div>
+{% endblock %}

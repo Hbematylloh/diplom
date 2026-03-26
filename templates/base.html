@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Автошкола - Главная{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+</head>
+<body>
+    <!-- ШАПКА (HEADER) -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1><a href="{{ url_for('index') }}">Автошкола</a></h1>
+                    <p class="logo-subtitle">Обучение вождению с гарантией</p>
+                </div>
+
+                <div class="header-right">
+                    <nav class="nav" id="mainNav">
+                        <ul>
+                            <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Главная</a></li>
+                            <li><a href="{{ url_for('programs') }}"><i class="fas fa-book-open"></i> Программы</a></li>
+                            <li><a href="{{ url_for('exam') }}"><i class="fas fa-car"></i> Экзамен ПДД</a></li>
+                            
+                            <!-- Ссылка для админа -->
+                            {% if session.get('is_admin') %}
+                            <li><a href="{{ url_for('admin_schedule') }}"><i class="fas fa-cog"></i> Админ-панель</a></li>
+                            {% endif %}
+                            
+                            {% if session.get('user_id') %}
+                            <li class="nav-user">
+                                <a href="{{ url_for('profile', user_id=session['user_id']) }}">
+                                    <i class="fas fa-user-circle"></i> {{ session.get('username', 'Профиль') }}
+                                </a>
+                            </li>
+                            <li><a href="{{ url_for('logout') }}" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Выйти</a></li>
+                            {% else %}
+                            <li class="nav-auth">
+                                <a href="{{ url_for('login') }}" class="btn-login"><i class="fas fa-sign-in-alt"></i> Вход</a>
+                                <a href="{{ url_for('register') }}" class="btn-register"><i class="fas fa-user-plus"></i> Регистрация</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+
+                    <button class="hamburger" id="hamburgerBtn">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ПОДВАЛ (FOOTER) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-car"></i> Автошкола</h3>
+                    <p>Профессиональное обучение вождению. Современный автопарк, опытные инструкторы, удобный график.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 8 (800) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@autoschool.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Ленина, 1</li>
+                        <li><i class="fas fa-clock"></i> Ежедневно 9:00 - 21:00</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Часы работы</h3>
+                    <ul>
+                        <li><i class="fas fa-calendar"></i> Пн-Пт: 9:00 - 21:00</li>
+                        <li><i class="fas fa-calendar"></i> Сб: 10:00 - 18:00</li>
+                        <li><i class="fas fa-calendar"></i> Вс: выходной</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Автошкола. Все права защищены.</p>
+                <p class="footer-links">
+                    <a href="#">Политика конфиденциальности</a> |
+                    <a href="#">Пользовательское соглашение</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО ГАМБУРГЕР-МЕНЮ -->
+    <div class="hamburger-menu" id="hamburgerMenu">
+        <div class="hamburger-menu-content">
+            <div class="hamburger-menu-header">
+                <h3><i class="fas fa-bars"></i> Меню</h3>
+                <button class="close-menu" id="closeMenuBtn">&times;</button>
+            </div>
+
+            <div class="hamburger-menu-cards">
+                <a href="{{ url_for('fleet') }}" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-truck"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Автопарк</h4>
+                        <p>Наши автомобили</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('instructors') }}" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-users"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Инструкторы</h4>
+                        <p>Опытные профессионалы</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('schedule') }}" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-clock"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Расписание</h4>
+                        <p>График занятий</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('programs') }}" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-ruble-sign"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Цены</h4>
+                        <p>Стоимость обучения</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-question-circle"></i></div>
+                    <div class="menu-card-content">
+                        <h4>FAQ</h4>
+                        <p>Часто задаваемые вопросы</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="menu-card-content">
+                        <h4>О нас</h4>
+                        <p>Наша история и ценности</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-newspaper"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Новости</h4>
+                        <p>События и обновления</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Лицензии</h4>
+                        <p>Официальные документы</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Контакты</h4>
+                        <p>Как нас найти</p>
+                    </div>
+                </a>
+
+                <a href="#" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-star"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Отзывы</h4>
+                        <p>Мнения наших учеников</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="hamburger-menu-footer">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p class="copyright">© 2026 Автошкола</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const menuHeader = document.querySelector('.hamburger-menu-header');
+            
+            function closeMenu() {
+                if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+                if (hamburgerMenu) hamburgerMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            if (hamburgerBtn && hamburgerMenu) {
+                hamburgerBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    hamburgerMenu.classList.toggle('active');
+                    document.body.style.overflow = hamburgerMenu.classList.contains('active') ? 'hidden' : '';
+                });
+                
+                if (closeMenuBtn) {
+                    closeMenuBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeMenu();
+                    });
+                }
+                
+                if (menuHeader) {
+                    menuHeader.addEventListener('click', function(e) {
+                        if (e.target !== closeMenuBtn && !closeMenuBtn.contains(e.target)) {
+                            closeMenu();
+                        }
+                    });
+                }
+                
+                document.querySelectorAll('.menu-card').forEach(card => {
+                    card.addEventListener('click', closeMenu);
+                });
+                
+                hamburgerMenu.addEventListener('click', function(e) {
+                    if (e.target === hamburgerMenu) closeMenu();
+                });
+                
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && hamburgerMenu.classList.contains('active')) closeMenu();
+                });
+            }
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}Расписание занятий{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Расписание занятий</h1>
+        <p class="subtitle">Выберите удобное время для обучения</p>
+    </section>
+
+    <!-- Переключатель между теорией и практикой -->
+    <div class="schedule-tabs">
+        <button class="tab-btn active" data-tab="theory">📚 Теория</button>
+        <button class="tab-btn" data-tab="practice">🚗 Практика (вождение)</button>
+    </div>
+
+    <!-- Блок ТЕОРИЯ -->
+    <div id="theory-tab" class="tab-content active">
+        <!-- Выбор подгруппы -->
+        <div class="subgroup-selector">
+            <h3>Выберите подгруппу:</h3>
+            <div class="subgroup-buttons">
+                <button class="subgroup-btn active" data-subgroup="A">Подгруппа A</button>
+                <button class="subgroup-btn" data-subgroup="B">Подгруппа B</button>
+                <button class="subgroup-btn" data-subgroup="C">Подгруппа C</button>
+            </div>
+        </div>
+
+        <!-- Расписание теории для подгруппы A -->
+        <div class="subgroup-content" data-subgroup="A">
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Понедельник</h3>
+                        <span class="day-badge">День 1</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Общие положения</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Дорожные знаки</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Среда</h3>
+                        <span class="day-badge">День 3</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Разметка и сигналы</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Скорость и обгон</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Пятница</h3>
+                        <span class="day-badge">День 5</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Остановка и стоянка</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Проезд перекрестков</span>
+                                <span class="lesson-room">Аудитория 101</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Расписание теории для подгруппы B -->
+        <div class="subgroup-content" data-subgroup="B" style="display: none;">
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Вторник</h3>
+                        <span class="day-badge">День 2</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Общие положения</span>
+                                <span class="lesson-room">Аудитория 102</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Дорожные знаки</span>
+                                <span class="lesson-room">Аудитория 102</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Четверг</h3>
+                        <span class="day-badge">День 4</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Разметка и сигналы</span>
+                                <span class="lesson-room">Аудитория 102</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Скорость и обгон</span>
+                                <span class="lesson-room">Аудитория 102</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Расписание теории для подгруппы C -->
+        <div class="subgroup-content" data-subgroup="C" style="display: none;">
+            <div class="schedule-grid">
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <div class="day-icon"><i class="fas fa-sun"></i></div>
+                        <h3>Суббота</h3>
+                        <span class="day-badge">День 6</span>
+                    </div>
+                    <div class="schedule-lessons">
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 13:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Общие положения + знаки</span>
+                                <span class="lesson-room">Аудитория 103</span>
+                            </div>
+                        </div>
+                        <div class="lesson">
+                            <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 17:00</div>
+                            <div class="lesson-info">
+                                <span class="lesson-type theory">Теория</span>
+                                <span class="lesson-title">ПДД: Разметка + сигналы</span>
+                                <span class="lesson-room">Аудитория 103</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок ПРАКТИКА (вождение) - только контакты инструкторов -->
+    <div id="practice-tab" class="tab-content" style="display: none;">
+        <div class="instructors-contact">
+            <div class="contact-header">
+                <i class="fas fa-phone-alt"></i>
+                <h2>Запись на практические занятия</h2>
+                <p>Для записи на вождение свяжитесь с инструктором напрямую по телефону</p>
+            </div>
+            
+            <div class="instructors-grid">
+                <!-- Инструктор 1 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Александр Петров</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Механика</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                            <span><i class="fas fa-clock"></i> 8 лет опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234567" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-67
+                            </a>
+                            <a href="https://wa.me/78001234567" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Инструктор 2 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Елена Смирнова</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Автомат</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                            <span><i class="fas fa-clock"></i> 6 лет опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234568" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-68
+                            </a>
+                            <a href="https://wa.me/78001234568" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Инструктор 3 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Дмитрий Иванов</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Механика/Автомат</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                            <span><i class="fas fa-clock"></i> 10 лет опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234569" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-69
+                            </a>
+                            <a href="https://wa.me/78001234569" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Инструктор 4 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Мария Козлова</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Автомат</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                            <span><i class="fas fa-clock"></i> 5 лет опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234570" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-70
+                            </a>
+                            <a href="https://wa.me/78001234570" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Инструктор 5 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Сергей Николаев</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Механика</span>
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                            <span><i class="fas fa-clock"></i> 12 лет опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234571" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-71
+                            </a>
+                            <a href="https://wa.me/78001234571" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Инструктор 6 -->
+                <div class="instructor-contact-card">
+                    <div class="instructor-photo">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="instructor-contact-info">
+                        <h3>Анна Волкова</h3>
+                        <div class="instructor-details">
+                            <span><i class="fas fa-car"></i> Автомат</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                            <span><i class="fas fa-clock"></i> 4 года опыта</span>
+                        </div>
+                        <div class="instructor-contacts">
+                            <a href="tel:+78001234572" class="contact-phone">
+                                <i class="fas fa-phone"></i> +7 (800) 123-45-72
+                            </a>
+                            <a href="https://wa.me/78001234572" class="contact-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Дополнительная информация -->
+            <div class="practice-info">
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <h4>Как записаться?</h4>
+                        <p>Выберите инструктора и свяжитесь с ним по телефону или WhatsApp. Инструктор поможет подобрать удобное время для занятий.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>Время занятий</h4>
+                        <p>Занятия проводятся ежедневно с 9:00 до 21:00. Время согласовывается индивидуально с инструктором.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Переключение между теорией и практикой
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const tab = this.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(`${tab}-tab`).style.display = 'block';
+        });
+    });
+
+    // Переключение подгрупп теории
+    document.querySelectorAll('.subgroup-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.subgroup-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const subgroup = this.dataset.subgroup;
+            document.querySelectorAll('.subgroup-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.querySelector(`.subgroup-content[data-subgroup="${subgroup}"]`).style.display = 'block';
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% block title %}Вход - ПДД 2026{% endblock %} {% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2><i class="fas fa-sign-in-alt"></i> Вход в аккаунт</h2>
+                <p>Введите свои данные для входа</p>
+            </div>
+
+            <form id="loginForm" class="auth-form" novalidate>
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="example@mail.com" value="test@example.com" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <!-- Пароль -->
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Пароль
+                    </label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" value="Test123" required>
+                    <div class="form-hint">
+                        <a href="#" class="forgot-password">Забыли пароль?</a>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <!-- Запомнить меня -->
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span class="checkmark"></span>
+                        Запомнить меня
+                    </label>
+                </div>
+
+                <!-- Кнопка входа -->
+                <button type="submit" class="btn-auth" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Войти
+                </button>
+
+                <!-- Ссылка на регистрацию -->
+                <div class="auth-footer">
+                    <p>Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрируйтесь</a></p>
+                </div>
+
+                <!-- Тестовые данные (подсказка) -->
+                <div class="test-data">
+                    <small>Тестовый пользователь: test@example.com / Test123</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+
+        function showError(input, message) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+            }
+            input.classList.add('invalid');
+        }
+
+        function hideError(input) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            if (errorDiv) {
+                errorDiv.textContent = '';
+            }
+            input.classList.remove('invalid');
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Базовая валидация
+            if (!email.value) {
+                showError(email, 'Введите email');
+                return;
+            }
+            if (!password.value) {
+                showError(password, 'Введите пароль');
+                return;
+            }
+
+            // Блокируем кнопку
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вход...';
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email.value,
+                        password: password.value,
+                        remember: document.getElementById('rememberMe').checked
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    window.location.href = data.redirect;
+                } else {
+                    if (data.errors) {
+                        if (data.errors.form) {
+                            alert('❌ ' + data.errors.form);
+                        }
+                        if (data.errors.email) showError(email, data.errors.email);
+                        if (data.errors.password) showError(password, data.errors.password);
+                    }
+
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('❌ Ошибка соединения с сервером');
+
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Войти';
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle fa-5x" style="color: var(--accent-color);"></i>
+            </div>
+            <div class="profile-info">
+                <h1>{{ user.username }}</h1>
+                <p class="profile-email">{{ user.email }}</p>
+                <p class="profile-date">Студент с: {{ user.created_at.strftime('%d.%m.%Y') }}</p>
+            </div>
+        </div>
+        
+        <div class="profile-stats">
+            <h2>Моя учебная информация</h2>
+            <div class="stats-grid">
+                <!-- Подгруппа -->
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Подгруппа</h3>
+                    <p class="stat-value">{{ user.subgroup if user.subgroup else 'Не выбрана' }}</p>
+                    {% if session.get('is_admin') %}
+                    <button class="stat-edit" onclick="openModal('subgroup')">Изменить</button>
+                    {% endif %}
+                </div>
+
+                <!-- Инструктор -->
+                <div class="stat-card">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <h3>Инструктор</h3>
+                    {% if instructor %}
+                    <p class="stat-value">{{ instructor.instructor }}</p>
+                    <p class="stat-detail">{{ instructor.car_type }} | ⭐ {{ instructor.rating }}</p>
+                    {% else %}
+                    <p class="stat-value">Не назначен</p>
+                    {% endif %}
+                    {% if session.get('is_admin') %}
+                    <button class="stat-edit" onclick="openModal('instructor')">Выбрать</button>
+                    {% endif %}
+                </div>
+
+                <!-- Автомобиль -->
+                <div class="stat-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Автомобиль</h3>
+                    <p class="stat-value">
+                        {% if user.car %}
+                        {{ user.car }}
+                        {% else %}
+                        Не выбран
+                        {% endif %}
+                    </p>
+                    {% if session.get('is_admin') and instructor and instructor.cars %}
+                    <button class="stat-edit" onclick="openModal('car')">Выбрать</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальные окна (только для админа) -->
+{% if session.get('is_admin') %}
+<div id="subgroupModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Выбор подгруппы</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form action="{{ url_for('update_subgroup') }}" method="POST" class="modal-form">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <div class="form-group">
+                <label>Подгруппа для занятий теории:</label>
+                <select name="subgroup" required>
+                    <option value="A" {% if user.subgroup == 'A' %}selected{% endif %}>Подгруппа A (Пн, Ср, Пт)</option>
+                    <option value="B" {% if user.subgroup == 'B' %}selected{% endif %}>Подгруппа B (Вт, Чт)</option>
+                    <option value="C" {% if user.subgroup == 'C' %}selected{% endif %}>Подгруппа C (Сб)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<div id="instructorModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Выбор инструктора</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form action="{{ url_for('update_instructor') }}" method="POST" class="modal-form">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <div class="form-group">
+                <label>Выберите инструктора:</label>
+                <select name="instructor_id" id="instructorSelect" required>
+                    <option value="">-- Выберите инструктора --</option>
+                    {% for inst in instructors %}
+                    <option value="{{ inst.id }}" 
+                            data-cars="{{ inst.cars }}"
+                            data-car-type="{{ inst.car_type }}"
+                            {% if user.instructor_id == inst.id %}selected{% endif %}>
+                        {{ inst.instructor }} | {{ inst.car_type }} | ⭐ {{ inst.rating }} | {{ inst.experience }} лет
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<div id="carModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Выбор автомобиля</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form action="{{ url_for('update_car') }}" method="POST" class="modal-form">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <div class="form-group">
+                <label>Автомобиль для практических занятий:</label>
+                <select name="car" id="carSelect" required>
+                    <option value="">-- Сначала выберите инструктора --</option>
+                    {% if instructor and instructor.cars %}
+                        {% for car in instructor.cars.split(',') %}
+                        <option value="{{ car.strip() }}" {% if user.car == car.strip() %}selected{% endif %}>
+                            {{ car.strip() }}
+                        </option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <div class="form-note">
+                <i class="fas fa-info-circle"></i> 
+                <small>Доступные автомобили зависят от выбранного инструктора</small>
+            </div>
+            <button type="submit" class="btn-submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const modals = {
+        subgroup: document.getElementById('subgroupModal'),
+        instructor: document.getElementById('instructorModal'),
+        car: document.getElementById('carModal')
+    };
+    
+    function openModal(type) {
+        if (modals[type]) modals[type].style.display = 'flex';
+    }
+    
+    const instructorSelect = document.getElementById('instructorSelect');
+    const carSelect = document.getElementById('carSelect');
+    
+    if (instructorSelect) {
+        instructorSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const cars = selectedOption.getAttribute('data-cars');
+            
+            if (carSelect && cars) {
+                const carList = cars.split(',');
+                carSelect.innerHTML = '<option value="">-- Выберите автомобиль --</option>';
+                carList.forEach(car => {
+                    const trimmedCar = car.trim();
+                    const option = document.createElement('option');
+                    option.value = trimmedCar;
+                    option.textContent = trimmedCar;
+                    carSelect.appendChild(option);
+                });
+            }
+        });
+    }
+    
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.onclick = function() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+    });
+    
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    }
+</script>
+{% endif %}
+{% endblock %}

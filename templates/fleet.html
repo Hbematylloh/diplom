@@ -1,0 +1,157 @@
+{% extends "base.html" %} {% block title %}Автопарк - Наши автомобили{% endblock %} {% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Наш автопарк</h1>
+        <p class="subtitle">Современные автомобили для комфортного обучения</p>
+    </section>
+
+    <!-- Фильтр по категориям -->
+    <div class="fleet-filters">
+        <button class="filter-btn active" data-filter="all">Все автомобили</button>
+        <button class="filter-btn" data-filter="mechanical">С механикой</button>
+        <button class="filter-btn" data-filter="automatic">С автоматом</button>
+        <button class="filter-btn" data-filter="electric">Электромобили</button>
+    </div>
+
+    <!-- Сетка автомобилей в стиле карточек меню -->
+    <div class="fleet-grid">
+        <!-- Карточка автомобиля 1 -->
+        <div class="car-card" data-category="mechanical">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Renault Logan.webp" alt="Renault Logan">
+            </div>
+            <div class="car-card-content">
+                <h3>Renault Logan</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Механика</span>
+                    <span><i class="fas fa-calendar"></i> 2023</span>
+                    <span><i class="fas fa-gas-pump"></i> Бензин</span>
+                </div>
+                <p class="car-description">Надежный автомобиль для начинающих водителей. Легкое управление и отличная обзорность.</p>
+            </div>
+        </div>
+
+        <!-- Карточка автомобиля 2 -->
+        <div class="car-card" data-category="automatic">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Kia Rio.webp" alt="Kia Rio">
+            </div>
+            <div class="car-card-content">
+                <h3>Kia Rio</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Автомат</span>
+                    <span><i class="fas fa-calendar"></i> 2024</span>
+                    <span><i class="fas fa-gas-pump"></i> Бензин</span>
+                </div>
+                <p class="car-description">Комфортный седан с автоматической коробкой передач. Идеален для обучения в городе.</p>
+            </div>
+        </div>
+
+        <!-- Карточка автомобиля 3 -->
+        <div class="car-card" data-category="automatic">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Hyundai Solaris.webp" alt="Hyundai Solaris">
+            </div>
+            <div class="car-card-content">
+                <h3>Hyundai Solaris</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Автомат</span>
+                    <span><i class="fas fa-calendar"></i> 2023</span>
+                    <span><i class="fas fa-gas-pump"></i> Бензин</span>
+                </div>
+                <p class="car-description">Популярный автомобиль для обучения. Маневренный и экономичный.</p>
+            </div>
+        </div>
+
+        <!-- Карточка автомобиля 4 -->
+        <div class="car-card" data-category="mechanical">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Lada Vesta.webp" alt="Lada Vesta">
+            </div>
+            <div class="car-card-content">
+                <h3>Lada Vesta</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Механика</span>
+                    <span><i class="fas fa-calendar"></i> 2024</span>
+                    <span><i class="fas fa-gas-pump"></i> Бензин</span>
+                </div>
+                <p class="car-description">Отечественный автомобиль с отличной ремонтопригодностью и низкими эксплуатационными расходами.</p>
+            </div>
+        </div>
+
+        <!-- Карточка автомобиля 5 -->
+        <div class="car-card" data-category="electric">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Tesla Model 3.webp" alt="Tesla Model 3">
+            </div>
+            <div class="car-card-content">
+                <h3>Tesla Model 3</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Автомат</span>
+                    <span><i class="fas fa-calendar"></i> 2024</span>
+                    <span><i class="fas fa-bolt"></i> Электро</span>
+                </div>
+                <p class="car-description">Современный электромобиль для обучения вождению на автомобилях будущего.</p>
+            </div>
+        </div>
+
+        <!-- Карточка автомобиля 6 -->
+        <div class="car-card" data-category="automatic">
+            <div class="car-card-icon">
+                <img src="/static/images/cars/Skoda Octavia.webp" alt="Skoda Octavia">
+            </div>
+            <div class="car-card-content">
+                <h3>Skoda Octavia</h3>
+                <div class="car-specs">
+                    <span><i class="fas fa-cog"></i> Автомат</span>
+                    <span><i class="fas fa-calendar"></i> 2023</span>
+                    <span><i class="fas fa-gas-pump"></i> Бензин</span>
+                </div>
+                <p class="car-description">Просторный лифтбек для комфортного обучения. Отличная управляемость.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Информация о пополнении парка -->
+    <section class="fleet-info">
+        <div class="info-card">
+            <i class="fas fa-sync-alt"></i>
+            <h3>Обновление парка</h3>
+            <p>Мы ежегодно обновляем автопарк, чтобы вы обучались на самых новых и безопасных автомобилях.</p>
+        </div>
+        <div class="info-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Безопасность</h3>
+            <p>Все автомобили проходят регулярное техническое обслуживание и оснащены дополнительными педалями для инструктора.</p>
+        </div>
+    </section>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    // Фильтрация автомобилей
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const carCards = document.querySelectorAll('.car-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Добавляем активный класс текущей кнопке
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+
+                carCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

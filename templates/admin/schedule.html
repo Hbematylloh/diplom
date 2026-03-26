@@ -1,0 +1,450 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель - Управление расписанием{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="admin-header">
+        <h1><i class="fas fa-calendar-alt"></i> Управление расписанием</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('admin_users') }}" class="btn-admin-users">
+                <i class="fas fa-users"></i> Пользователи
+            </a>
+            <a href="{{ url_for('admin_schedule_init') }}" class="btn-admin-init" onclick="return confirm('Загрузить тестовые данные? Все текущие данные будут удалены!')">
+                <i class="fas fa-database"></i> Загрузить тестовые данные
+            </a>
+        </div>
+    </div>
+
+    <div class="admin-tabs">
+        <button class="tab-btn" data-tab="all"><i class="fas fa-list"></i> Все</button>
+        <button class="tab-btn active" data-tab="theory-a"><i class="fas fa-chalkboard"></i> Теория A</button>
+        <button class="tab-btn" data-tab="theory-b"><i class="fas fa-chalkboard"></i> Теория B</button>
+        <button class="tab-btn" data-tab="theory-c"><i class="fas fa-chalkboard"></i> Теория C</button>
+        <button class="tab-btn" data-tab="instructors"><i class="fas fa-users"></i> Инструкторы</button>
+    </div>
+
+    <!-- Вкладка "Все" (отображает всё расписание) -->
+    <div id="all" class="tab-content">
+        <div class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-list"></i> Все записи расписания</h2>
+                <div class="section-buttons">
+                    <button class="btn-add" onclick="openAddModal('theory_A')"><i class="fas fa-plus"></i> Добавить теорию A</button>
+                    <button class="btn-add" onclick="openAddModal('theory_B')"><i class="fas fa-plus"></i> Добавить теорию B</button>
+                    <button class="btn-add" onclick="openAddModal('theory_C')"><i class="fas fa-plus"></i> Добавить теорию C</button>
+                    <button class="btn-add" onclick="openAddModal('instructor')"><i class="fas fa-plus"></i> Добавить инструктора</button>
+                </div>
+            </div>
+            
+            <div class="schedule-table">
+                 <table>
+                    <thead>
+                        <tr>
+                            <th>Тип</th>
+                            <th>День</th>
+                            <th>Время</th>
+                            <th>Название / Имя</th>
+                            <th>Аудитория / Тип КПП</th>
+                            <th>Порядок</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Теория A -->
+                        {% for item in theory_a %}
+                        <tr class="theory-row">
+                            <td><span class="badge-theory">Теория A</span></td>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>Ауд. {{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_A')"><i class="fas fa-edit"></i> Редакт.</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <!-- Теория B -->
+                        {% for item in theory_b %}
+                        <tr class="theory-row">
+                            <td><span class="badge-theory">Теория B</span></td>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>Ауд. {{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_B')"><i class="fas fa-edit"></i> Редакт.</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <!-- Теория C -->
+                        {% for item in theory_c %}
+                        <tr class="theory-row">
+                            <td><span class="badge-theory">Теория C</span></td>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>Ауд. {{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_C')"><i class="fas fa-edit"></i> Редакт.</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <!-- Инструкторы -->
+                        {% for item in instructors %}
+                        <tr class="instructor-row">
+                            <td><span class="badge-instructor">Инструктор</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>{{ item.instructor }}</td>
+                            <td>{{ item.car_type }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'instructor')"><i class="fas fa-edit"></i> Редакт.</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Теория A -->
+    <div id="theory-a" class="tab-content">
+        <div class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chalkboard"></i> Расписание подгруппы A</h2>
+                <button class="btn-add" onclick="openAddModal('theory_A')"><i class="fas fa-plus"></i> Добавить занятие</button>
+            </div>
+            
+            <div class="schedule-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>День</th>
+                            <th>Время</th>
+                            <th>Название</th>
+                            <th>Аудитория</th>
+                            <th>Порядок</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in theory_a %}
+                        <tr>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_A')"><i class="fas fa-edit"></i> Редактировать</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Теория B -->
+    <div id="theory-b" class="tab-content">
+        <div class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chalkboard"></i> Расписание подгруппы B</h2>
+                <button class="btn-add" onclick="openAddModal('theory_B')"><i class="fas fa-plus"></i> Добавить занятие</button>
+            </div>
+            <div class="schedule-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>День</th>
+                            <th>Время</th>
+                            <th>Название</th>
+                            <th>Аудитория</th>
+                            <th>Порядок</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in theory_b %}
+                        <tr>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_B')"><i class="fas fa-edit"></i> Редактировать</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Теория C -->
+    <div id="theory-c" class="tab-content">
+        <div class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chalkboard"></i> Расписание подгруппы C</h2>
+                <button class="btn-add" onclick="openAddModal('theory_C')"><i class="fas fa-plus"></i> Добавить занятие</button>
+            </div>
+            <div class="schedule-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>День</th>
+                            <th>Время</th>
+                            <th>Название</th>
+                            <th>Аудитория</th>
+                            <th>Порядок</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in theory_c %}
+                        <tr>
+                            <td>{{ item.day }}</td>
+                            <td>{{ item.time_start }} - {{ item.time_end }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.room }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'theory_C')"><i class="fas fa-edit"></i> Редактировать</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Инструкторы -->
+    <div id="instructors" class="tab-content">
+        <div class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Инструкторы</h2>
+                <button class="btn-add" onclick="openAddModal('instructor')"><i class="fas fa-plus"></i> Добавить инструктора</button>
+            </div>
+            <div class="schedule-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Тип КПП</th>
+                            <th>Рейтинг</th>
+                            <th>Опыт</th>
+                            <th>Телефон</th>
+                            <th>Автомобили</th>
+                            <th>Порядок</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in instructors %}
+                        <tr>
+                            <td>{{ item.instructor }}</td>
+                            <td>{{ item.car_type }}</td>
+                            <td>{{ item.rating }}</td>
+                            <td>{{ item.experience }} лет</td>
+                            <td>{{ item.phone }}</td>
+                            <td>{{ item.cars }}</td>
+                            <td>{{ item.order_index }}</td>
+                            <td class="actions">
+                                <button class="btn-edit" onclick="openEditModal({{ item.id }}, 'instructor')"><i class="fas fa-edit"></i> Редактировать</button>
+                                <a href="{{ url_for('admin_schedule_delete', id=item.id) }}" class="btn-delete" onclick="return confirm('Удалить?')"><i class="fas fa-trash"></i> Удалить</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- УВЕЛИЧЕННОЕ МОДАЛЬНОЕ ОКНО -->
+<div id="scheduleModal" class="modal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h3 id="modalTitle">Редактировать</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form id="scheduleForm" method="POST" action="{{ url_for('admin_schedule_add') }}">
+            <input type="hidden" name="id" id="editId">
+            <input type="hidden" name="group_type" id="groupType">
+            
+            <div class="form-row">
+                <div class="form-group half">
+                    <label><i class="fas fa-calendar"></i> День недели</label>
+                    <select name="day" id="day" required>
+                        <option value="Понедельник">Понедельник</option>
+                        <option value="Вторник">Вторник</option>
+                        <option value="Среда">Среда</option>
+                        <option value="Четверг">Четверг</option>
+                        <option value="Пятница">Пятница</option>
+                        <option value="Суббота">Суббота</option>
+                        <option value="Воскресенье">Воскресенье</option>
+                    </select>
+                </div>
+                <div class="form-group half">
+                    <label><i class="fas fa-sort-numeric-up"></i> Порядок отображения</label>
+                    <input type="number" name="order_index" id="orderIndex" value="0" placeholder="0">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group half">
+                    <label><i class="fas fa-hourglass-start"></i> Время начала</label>
+                    <input type="time" name="time_start" id="timeStart" required>
+                </div>
+                <div class="form-group half">
+                    <label><i class="fas fa-hourglass-end"></i> Время окончания</label>
+                    <input type="time" name="time_end" id="timeEnd" required>
+                </div>
+            </div>
+            
+            <div id="theoryFields">
+                <div class="form-group">
+                    <label><i class="fas fa-book"></i> Название занятия</label>
+                    <input type="text" name="title" id="title" placeholder="ПДД: Общие положения">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-door-open"></i> Аудитория</label>
+                    <input type="text" name="room" id="room" placeholder="101">
+                </div>
+            </div>
+            
+            <div id="instructorFields" style="display: none;">
+                <div class="form-group">
+                    <label><i class="fas fa-user-tie"></i> Имя инструктора</label>
+                    <input type="text" name="instructor" id="instructor" placeholder="Александр Петров">
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label><i class="fas fa-star"></i> Рейтинг</label>
+                        <input type="number" step="0.1" name="rating" id="rating" placeholder="4.9">
+                    </div>
+                    <div class="form-group half">
+                        <label><i class="fas fa-calendar-alt"></i> Опыт (лет)</label>
+                        <input type="number" name="experience" id="experience" placeholder="8">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label><i class="fas fa-cog"></i> Тип КПП</label>
+                        <select name="car_type" id="carType">
+                            <option value="Механика">Механика</option>
+                            <option value="Автомат">Автомат</option>
+                            <option value="Механика/Автомат">Механика/Автомат</option>
+                        </select>
+                    </div>
+                    <div class="form-group half">
+                        <label><i class="fas fa-phone"></i> Телефон</label>
+                        <input type="text" name="phone" id="phone" placeholder="+7 (800) 123-45-67">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label><i class="fab fa-whatsapp"></i> WhatsApp</label>
+                        <input type="text" name="whatsapp" id="whatsapp" placeholder="78001234567">
+                    </div>
+                    <div class="form-group half">
+                        <label><i class="fas fa-car"></i> Автомобили</label>
+                        <input type="text" name="cars" id="cars" placeholder="Renault Logan, Lada Vesta">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Сохранить изменения
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('scheduleModal');
+    const closeModal = document.querySelector('.close-modal');
+    
+    function openAddModal(groupType) {
+        document.getElementById('modalTitle').textContent = 'Добавить запись';
+        document.getElementById('scheduleForm').action = "{{ url_for('admin_schedule_add') }}";
+        document.getElementById('groupType').value = groupType;
+        document.getElementById('editId').value = '';
+        document.getElementById('scheduleForm').reset();
+        
+        if (groupType === 'instructor') {
+            document.getElementById('theoryFields').style.display = 'none';
+            document.getElementById('instructorFields').style.display = 'block';
+        } else {
+            document.getElementById('theoryFields').style.display = 'block';
+            document.getElementById('instructorFields').style.display = 'none';
+        }
+        
+        modal.style.display = 'flex';
+    }
+    
+    function openEditModal(id, groupType) {
+        document.getElementById('modalTitle').textContent = 'Редактировать запись';
+        document.getElementById('scheduleForm').action = `/admin/schedule/edit/${id}`;
+        document.getElementById('groupType').value = groupType;
+        document.getElementById('editId').value = id;
+        
+        if (groupType === 'instructor') {
+            document.getElementById('theoryFields').style.display = 'none';
+            document.getElementById('instructorFields').style.display = 'block';
+        } else {
+            document.getElementById('theoryFields').style.display = 'block';
+            document.getElementById('instructorFields').style.display = 'none';
+        }
+        
+        modal.style.display = 'flex';
+    }
+    
+    closeModal.onclick = function() {
+        modal.style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+    
+    // Переключение вкладок
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const tab = this.dataset.tab;
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById(tab).style.display = 'block';
+        });
+    });
+    
+    // Показываем активную вкладку по умолчанию
+    document.getElementById('theory-a').style.display = 'block';
+</script>
+{% endblock %}

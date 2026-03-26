@@ -1,0 +1,291 @@
+{% extends "base.html" %} {% block title %}Регистрация - ПДД 2026{% endblock %} {% block content %}
+<div class="container">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
+                <p>Создайте аккаунт для отслеживания прогресса</p>
+            </div>
+
+            <form id="registerForm" class="auth-form" novalidate>
+                <!-- Имя пользователя -->
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Имя пользователя
+                    </label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Введите имя пользователя" required minlength="3" maxlength="20" pattern="[A-Za-zА-Яа-я0-9_]+">
+                    <div class="form-hint">От 3 до 20 символов: буквы, цифры, _</div>
+                    <div class="error-message" id="usernameError"></div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="example@mail.com" required>
+                    <div class="form-hint">Введите действующий email</div>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <!-- Пароль -->
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Пароль
+                    </label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Придумайте пароль" required minlength="6" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+                    <div class="form-hint">
+                        Минимум 6 символов: хотя бы одна заглавная, одна строчная буква и одна цифра
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <!-- Подтверждение пароля -->
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <i class="fas fa-lock"></i> Подтверждение пароля
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Повторите пароль" required>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+
+                <!-- Согласие с правилами -->
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        Я соглашаюсь с <a href="#" target="_blank">условиями использования</a> и 
+                        <a href="#" target="_blank">политикой конфиденциальности</a>
+                    </label>
+                    <div class="error-message" id="termsError"></div>
+                </div>
+
+                <!-- Кнопка отправки -->
+                <button type="submit" class="btn-auth" id="registerBtn">
+                    <i class="fas fa-user-check"></i> Зарегистрироваться
+                </button>
+
+                <!-- Ссылка на вход -->
+                <div class="auth-footer">
+                    <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войдите</a></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Блок с преимуществами -->
+        <div class="auth-benefits">
+            <h3>После регистрации вы сможете:</h3>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Отслеживать свой прогресс</li>
+                <li><i class="fas fa-check-circle"></i> Видеть статистику ошибок</li>
+                <li><i class="fas fa-check-circle"></i> Сохранять результаты</li>
+                <li><i class="fas fa-check-circle"></i> Соревноваться с друзьями</li>
+                <li><i class="fas fa-check-circle"></i> Получать рекомендации</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('registerForm');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const agreeTerms = document.getElementById('agreeTerms');
+        const registerBtn = document.getElementById('registerBtn');
+
+        // Функция для показа ошибки
+        function showError(input, message) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            if (errorDiv) {
+                errorDiv.textContent = message;
+            }
+            input.classList.add('invalid');
+            input.classList.remove('valid');
+        }
+
+        // Функция для скрытия ошибки
+        function hideError(input) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            if (errorDiv) {
+                errorDiv.textContent = '';
+            }
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+        }
+
+        // Валидация username
+        username.addEventListener('input', function() {
+            const value = this.value;
+            const usernameRegex = /^[A-Za-zА-Яа-я0-9_]{3,20}$/;
+
+            if (value.length < 3) {
+                showError(this, 'Имя пользователя должно содержать минимум 3 символа');
+            } else if (value.length > 20) {
+                showError(this, 'Имя пользователя должно содержать максимум 20 символов');
+            } else if (!usernameRegex.test(value)) {
+                showError(this, 'Только буквы, цифры и символ подчеркивания (_)');
+            } else {
+                hideError(this);
+            }
+        });
+
+        // Валидация email
+        email.addEventListener('input', function() {
+            const value = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(value)) {
+                showError(this, 'Введите корректный email адрес');
+            } else {
+                hideError(this);
+            }
+        });
+
+        // Индикатор сложности пароля
+        password.addEventListener('input', function() {
+            const value = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+
+            // Проверка сложности
+            let strength = 0;
+            if (value.length >= 6) strength += 1;
+            if (value.match(/[a-z]+/)) strength += 1;
+            if (value.match(/[A-Z]+/)) strength += 1;
+            if (value.match(/[0-9]+/)) strength += 1;
+            if (value.match(/[$@#&!]+/)) strength += 1;
+
+            // Обновление индикатора
+            strengthBar.className = 'strength-bar';
+            if (value.length === 0) {
+                strengthBar.style.width = '0';
+            } else if (strength <= 2) {
+                strengthBar.classList.add('weak');
+                strengthBar.style.width = '33%';
+            } else if (strength <= 4) {
+                strengthBar.classList.add('medium');
+                strengthBar.style.width = '66%';
+            } else {
+                strengthBar.classList.add('strong');
+                strengthBar.style.width = '100%';
+            }
+
+            // Валидация пароля
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+            if (!passwordRegex.test(value)) {
+                showError(this, 'Пароль должен содержать минимум 6 символов, включая заглавные, строчные буквы и цифры');
+            } else {
+                hideError(this);
+            }
+
+            // Проверка подтверждения пароля
+            if (confirmPassword.value && value !== confirmPassword.value) {
+                showError(confirmPassword, 'Пароли не совпадают');
+            } else if (confirmPassword.value) {
+                hideError(confirmPassword);
+            }
+        });
+
+        // Подтверждение пароля
+        confirmPassword.addEventListener('input', function() {
+            if (this.value !== password.value) {
+                showError(this, 'Пароли не совпадают');
+            } else {
+                hideError(this);
+            }
+        });
+
+        // Отправка формы
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Флаг валидности
+            let isValid = true;
+
+            // Проверка username
+            if (!username.value.match(/^[A-Za-zА-Яа-я0-9_]{3,20}$/)) {
+                showError(username, 'Некорректное имя пользователя');
+                isValid = false;
+            }
+
+            // Проверка email
+            if (!email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                showError(email, 'Некорректный email');
+                isValid = false;
+            }
+
+            // Проверка пароля
+            if (!password.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/)) {
+                showError(password, 'Некорректный пароль');
+                isValid = false;
+            }
+
+            // Проверка подтверждения пароля
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword, 'Пароли не совпадают');
+                isValid = false;
+            }
+
+            // Проверка согласия с правилами
+            if (!agreeTerms.checked) {
+                document.getElementById('termsError').textContent = 'Необходимо согласие с условиями';
+                isValid = false;
+            }
+
+            // Если всё валидно - отправляем
+            if (isValid) {
+                // Блокируем кнопку
+                registerBtn.disabled = true;
+                registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Регистрация...';
+
+                try {
+                    // Отправляем данные на сервер
+                    const response = await fetch('/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            username: username.value,
+                            email: email.value,
+                            password: password.value
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Успешная регистрация
+                        alert('✅ ' + data.message);
+                        window.location.href = data.redirect;
+                    } else {
+                        // Ошибки валидации
+                        if (data.errors) {
+                            if (data.errors.username) showError(username, data.errors.username);
+                            if (data.errors.email) showError(email, data.errors.email);
+                            if (data.errors.password) showError(password, data.errors.password);
+                            if (data.errors.form) alert('❌ ' + data.errors.form);
+                        }
+
+                        // Разблокируем кнопку
+                        registerBtn.disabled = false;
+                        registerBtn.innerHTML = '<i class="fas fa-user-check"></i> Зарегистрироваться';
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('❌ Ошибка соединения с сервером');
+
+                    // Разблокируем кнопку
+                    registerBtn.disabled = false;
+                    registerBtn.innerHTML = '<i class="fas fa-user-check"></i> Зарегистрироваться';
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

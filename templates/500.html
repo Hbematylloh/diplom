@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block title %}Ошибка сервера - Автошкола{% endblock %} {% block content %}
+<div class="container">
+    <div class="error-page">
+        <h1>500</h1>
+        <h2>Ошибка сервера</h2>
+        <p>Что-то пошло не так. Пожалуйста, попробуйте позже.</p>
+        <a href="{{ url_for('index') }}" class="btn-start">Вернуться на главную</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "base.html" %} {% block title %}Наши инструкторы{% endblock %} {% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Наши инструкторы</h1>
+        <p class="subtitle">Профессионалы с многолетним опытом обучения</p>
+    </section>
+
+    <!-- Сетка инструкторов в стиле карточек меню -->
+    <div class="instructors-grid">
+        <!-- Инструктор 1 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <img src="static\images\instructors\kat.webp" alt="kat">
+            </div>
+            <div class="instructor-card-content">
+                <h3>Александр Петров</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 4.9</span>
+                    <span><i class="fas fa-car"></i> 8 лет</span>
+                </div>
+                <p class="instructor-bio">Опытный инструктор, специализируется на обучении вождению на механике. Индивидуальный подход к каждому ученику.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Renault Logan, Lada Vesta</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Инструктор 2 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="instructor-card-content">
+                <h3>Елена Смирнова</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 5.0</span>
+                    <span><i class="fas fa-car"></i> 6 лет</span>
+                </div>
+                <p class="instructor-bio">Спокойная и терпеливая, помогает преодолеть страх вождения. Специализируется на обучении на автомате.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Kia Rio, Hyundai Solaris</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Инструктор 3 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="instructor-card-content">
+                <h3>Дмитрий Иванов</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 4.8</span>
+                    <span><i class="fas fa-car"></i> 10 лет</span>
+                </div>
+                <p class="instructor-bio">Мастер спорта по автогонкам. Обучает уверенному вождению в сложных городских условиях.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Skoda Octavia, Tesla Model 3</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Инструктор 4 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="instructor-card-content">
+                <h3>Мария Козлова</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 4.9</span>
+                    <span><i class="fas fa-car"></i> 5 лет</span>
+                </div>
+                <p class="instructor-bio">Молодой и энергичный инструктор. Легко находит общий язык с учениками любого возраста.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Kia Rio, Hyundai Solaris</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Инструктор 5 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="instructor-card-content">
+                <h3>Сергей Николаев</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 4.7</span>
+                    <span><i class="fas fa-car"></i> 12 лет</span>
+                </div>
+                <p class="instructor-bio">Опытный инструктор, подготовил более 500 водителей. Специализируется на подготовке к экзаменам в ГИБДД.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Renault Logan, Lada Vesta</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Инструктор 6 -->
+        <div class="instructor-card">
+            <div class="instructor-card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="instructor-card-content">
+                <h3>Анна Волкова</h3>
+                <div class="instructor-stats">
+                    <span><i class="fas fa-star"></i> 5.0</span>
+                    <span><i class="fas fa-car"></i> 4 года</span>
+                </div>
+                <p class="instructor-bio">Внимательная и терпеливая. Помогает ученикам чувствовать себя уверенно за рулем с первых занятий.</p>
+                <div class="instructor-cars">
+                    <small><i class="fas fa-car-side"></i> Skoda Octavia, Tesla Model 3</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Преимущества работы с нашими инструкторами -->
+    <section class="instructors-features">
+        <h2>Почему выбирают наших инструкторов</h2>
+        <div class="features-list">
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>Опыт и квалификация</h3>
+                    <p>Все инструкторы имеют профильное образование и регулярно повышают квалификацию</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>Индивидуальный подход</h3>
+                    <p>Программа обучения подстраивается под ваш уровень подготовки и темп обучения</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>Гибкий график</h3>
+                    <p>Занятия в удобное для вас время, включая вечерние часы и выходные</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

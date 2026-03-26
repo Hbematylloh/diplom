@@ -1,0 +1,189 @@
+{% extends "base.html" %} {% block title %}Программы обучения - Автошкола{% endblock %} {% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Программы обучения</h1>
+        <p class="subtitle">Выберите подходящую программу и начните обучение уже сегодня</p>
+    </section>
+
+    <!-- Общая информация для всех программ -->
+    <section class="programs-info">
+        <div class="info-grid">
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <h3>Среднее время обучения</h3>
+                <p>2.5 - 3 месяца в зависимости от выбранной программы и интенсивности занятий</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Все программы включают</h3>
+                <p>✓ Теоретические занятия<br>✓ Практическое вождение<br>✓ Учебные материалы<br>✓ Внутренний экзамен</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-file-medical"></i>
+                <h3>Медицинская справка</h3>
+                <p>Помощь в получении медицинской справки для ГИБДД (включена в некоторые тарифы)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Карточки программ -->
+    <section class="programs-grid">
+        <!-- Программа "Базовая" -->
+        <div class="program-card">
+            <div class="program-header">
+                <span class="program-badge basic">Популярная</span>
+                <h2>Базовая</h2>
+                <p class="program-description">Лучшие условия обучения. Медсправка в подарок!</p>
+            </div>
+
+            <div class="program-duration">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Срок обучения: 2.5 месяца</span>
+            </div>
+
+            <div class="program-features">
+                <h4>В программу входит:</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> 134 часа теории</li>
+                    <li><i class="fas fa-check"></i> 56 часов вождения</li>
+                    <li><i class="fas fa-check"></i> Учебные пособия</li>
+                    <li><i class="fas fa-check"></i> Медсправка в подарок</li>
+                    <li><i class="fas fa-check"></i> Внутренний экзамен</li>
+                </ul>
+            </div>
+
+            <div class="payment-schedule">
+                <h4>График платежей:</h4>
+                <div class="payment-item">
+                    <span class="payment-period">При заключении договора</span>
+                    <span class="payment-amount">10 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Через месяц обучения</span>
+                    <span class="payment-amount">20 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Через 2 месяца обучения</span>
+                    <span class="payment-amount">30 000 ₽</span>
+                </div>
+            </div>
+
+            <div class="program-price">
+                <div class="price-old">72 000 ₽</div>
+                <div class="price-current">60 000 ₽</div>
+                <div class="price-save">Экономия 12 000 ₽</div>
+            </div>
+
+            <a href="#" class="program-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <!-- Программа "Максимум" -->
+        <div class="program-card featured">
+            <div class="program-header">
+                <span class="program-badge premium">Рекомендуем</span>
+                <h2>Максимум</h2>
+                <p class="program-description">Лучшая программа подготовки!</p>
+            </div>
+
+            <div class="program-duration">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Срок обучения: 3 месяца</span>
+            </div>
+
+            <div class="program-features">
+                <h4>В программу входит:</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> 150 часов теории</li>
+                    <li><i class="fas fa-check"></i> 70 часов вождения</li>
+                    <li><i class="fas fa-check"></i> Учебные пособия + доступ к онлайн-платформе</li>
+                    <li><i class="fas fa-check"></i> Медсправка в подарок</li>
+                    <li><i class="fas fa-check"></i> Внутренний экзамен</li>
+                    <li><i class="fas fa-check"></i> Вождение в сложных условиях</li>
+                </ul>
+            </div>
+
+            <div class="payment-schedule">
+                <h4>График платежей:</h4>
+                <div class="payment-item">
+                    <span class="payment-period">При заключении договора</span>
+                    <span class="payment-amount">10 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Через месяц обучения</span>
+                    <span class="payment-amount">33 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Через 2 месяца обучения</span>
+                    <span class="payment-amount">30 000 ₽</span>
+                </div>
+            </div>
+
+            <div class="program-price">
+                <div class="price-old">80 000 ₽</div>
+                <div class="price-current">73 000 ₽</div>
+                <div class="price-save">Экономия 7 000 ₽</div>
+            </div>
+
+            <a href="#" class="program-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <!-- Программа "Экспресс" (дополнительная) -->
+        <div class="program-card">
+            <div class="program-header">
+                <span class="program-badge express">Интенсив</span>
+                <h2>Экспресс</h2>
+                <p class="program-description">Для тех, кто хочет быстро получить права</p>
+            </div>
+
+            <div class="program-duration">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Срок обучения: 2 месяца</span>
+            </div>
+
+            <div class="program-features">
+                <h4>В программу входит:</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> 140 часов теории (интенсив)</li>
+                    <li><i class="fas fa-check"></i> 60 часов вождения</li>
+                    <li><i class="fas fa-check"></i> Учебные пособия</li>
+                    <li><i class="fas fa-check"></i> Индивидуальный график</li>
+                    <li><i class="fas fa-check"></i> Внутренний экзамен</li>
+                </ul>
+            </div>
+
+            <div class="payment-schedule">
+                <h4>График платежей:</h4>
+                <div class="payment-item">
+                    <span class="payment-period">При заключении договора</span>
+                    <span class="payment-amount">15 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Через месяц обучения</span>
+                    <span class="payment-amount">35 000 ₽</span>
+                </div>
+                <div class="payment-item">
+                    <span class="payment-period">Остаток</span>
+                    <span class="payment-amount">20 000 ₽</span>
+                </div>
+            </div>
+
+            <div class="program-price">
+                <div class="price-old">75 000 ₽</div>
+                <div class="price-current">70 000 ₽</div>
+                <div class="price-save">Экономия 5 000 ₽</div>
+            </div>
+
+            <a href="#" class="program-btn">Подробнее <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- Дополнительная информация -->
+    <section class="programs-footer">
+        <div class="note-box">
+            <i class="fas fa-info-circle"></i>
+            <p>Все цены указаны с учетом скидки при единовременной оплате. Возможна рассрочка без переплат.</p>
+        </div>
+    </section>
+</div>
+{% endblock %}

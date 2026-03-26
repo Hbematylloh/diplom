@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель - Пользователи{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="admin-header">
+        <h1><i class="fas fa-users"></i> Управление пользователями</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('admin_schedule') }}" class="btn-admin-back">
+                <i class="fas fa-arrow-left"></i> Назад к расписанию
+            </a>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <div class="schedule-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th>Подгруппа</th>
+                        <th>Автомобиль</th>
+                        <th>Тип КПП</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.role == 'admin' %}
+                            <span class="badge-admin">Администратор</span>
+                            {% else %}
+                            <span class="badge-user">Пользователь</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ user.subgroup }}</td>
+                        <td>{{ user.car or '—' }}</td>
+                        <td>
+                            {% if user.car_type == 'manual' %}
+                            Механика
+                            {% elif user.car_type == 'automatic' %}
+                            Автомат
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
