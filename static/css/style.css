@@ -273,6 +273,52 @@ body {
 
 
 /* Секция преимуществ */
+/* Ссылки на преимуществах */
+
+.feature-link {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.feature-link:hover {
+    transform: translateY(-5px);
+}
+
+.feature-link .feature {
+    cursor: pointer;
+    height: 100%;
+    transition: all 0.3s;
+}
+
+.feature-link:hover .feature {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-arrow {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s;
+}
+
+.feature-link:hover .feature-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .feature-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
 .features {
     padding: 60px 0;
@@ -4966,4 +5012,755 @@ body {
         padding: 2px 8px;
         font-size: 0.6rem;
     }
+}
+
+/* ========== СТРАНИЦА КОНТАКТОВ ========== */
+
+/* Основные контакты */
+.contacts-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.contact-info-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+.contact-info-card i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.contact-info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.contact-info-card p {
+    color: var(--text-color);
+    margin: 5px 0;
+}
+
+.contact-info-card .small {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Сотрудники */
+.employees-section {
+    margin: 60px 0;
+}
+
+.employees-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.employees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 25px;
+}
+
+.employee-card {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.employee-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+}
+
+.employee-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--light-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.employee-icon i {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+.employee-info {
+    flex: 1;
+}
+
+.employee-info h3 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.employee-name {
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.employee-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: var(--light-bg);
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.contact-link:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+.employee-schedule {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin: 8px 0 5px;
+}
+
+.employee-note {
+    font-size: 0.8rem;
+    color: var(--success-color);
+}
+
+/* Реквизиты */
+.requisites-section {
+    margin: 60px 0;
+}
+
+.requisites-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.requisites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.requisites-card {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+}
+
+.requisites-card i {
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.requisites-card p {
+    margin: 5px 0;
+    color: var(--text-color);
+}
+
+/* Карта */
+.map-section {
+    margin: 60px 0;
+}
+
+.map-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.map-container {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 20px;
+}
+
+.map-address {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+}
+
+.map-address i {
+    color: var(--accent-color);
+    margin-right: 10px;
+}
+
+.map-address p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Форма обратной связи */
+.feedback-section {
+    margin: 60px 0;
+    padding: 40px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+.feedback-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.feedback-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.feedback-form .form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.feedback-form .form-group {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.feedback-form select,
+.feedback-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.feedback-form select:focus,
+.feedback-form textarea:focus,
+.feedback-form input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 133, 51, 0.1);
+}
+
+.feedback-form .btn-submit {
+    width: auto;
+    padding: 12px 30px;
+    margin-top: 10px;
+}
+
+.form-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.form-note i {
+    color: var(--accent-color);
+    margin-right: 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .employees-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .employee-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .employee-icon {
+        margin: 0 auto;
+    }
+    
+    .employee-contacts {
+        justify-content: center;
+    }
+    
+    .requisites-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feedback-section {
+        padding: 25px;
+    }
+    
+    .feedback-form .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .contacts-main {
+        grid-template-columns: 1fr;
+    }
+}
+/* Плейсхолдер для карты */
+.map-placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    border: 2px dashed var(--border-color);
+    margin-bottom: 20px;
+}
+
+.map-placeholder i {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.map-placeholder p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.map-placeholder small {
+    color: var(--text-light);
+}
+
+/* ========== СТРАНИЦА FAQ ========== */
+
+/* Поиск */
+.faq-search {
+    margin: 30px 0 40px;
+}
+
+.search-box {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 133, 51, 0.1);
+}
+
+/* Категории */
+.faq-categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.category-btn {
+    padding: 8px 20px;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.category-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.category-btn.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-color);
+}
+
+/* Список вопросов */
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-category-group {
+    margin-bottom: 40px;
+}
+
+.category-title {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+}
+
+.faq-item {
+    background: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    cursor: pointer;
+    background: white;
+    transition: background 0.3s;
+}
+
+.faq-question:hover {
+    background: var(--light-bg);
+}
+
+.faq-question i {
+    color: var(--accent-color);
+    transition: transform 0.3s;
+    font-size: 0.9rem;
+}
+
+.faq-item.open .faq-question i {
+    transform: rotate(90deg);
+}
+
+.faq-question span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    flex: 1;
+}
+
+.faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: var(--light-bg);
+}
+
+.faq-item.open .faq-answer {
+    padding: 20px;
+    max-height: 500px;
+}
+
+.faq-answer p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.faq-answer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.faq-answer a:hover {
+    text-decoration: underline;
+}
+
+/* Результат поиска */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    margin: 40px 0;
+}
+
+.no-results i {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.no-results p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.no-results small {
+    color: var(--text-light);
+}
+
+/* Блок контактов */
+.faq-contact {
+    margin: 60px 0;
+}
+
+.contact-card {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--border-radius);
+    color: white;
+}
+
+.contact-card i {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.contact-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-card p {
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    transition: all 0.3s;
+    border: 2px solid var(--accent-color);
+}
+
+.btn-contact:hover {
+    background: transparent;
+    color: white;
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .faq-categories {
+        gap: 8px;
+    }
+    
+    .category-btn {
+        padding: 6px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .faq-question {
+        padding: 15px;
+    }
+    
+    .faq-question span {
+        font-size: 0.95rem;
+    }
+    
+    .faq-item.open .faq-answer {
+        padding: 15px;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-contact {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+}
+
+
+/* Кнопки в блоке контактов FAQ */
+.contact-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Кнопки в блоке контактов FAQ */
+.btn-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    transition: all 0.3s;
+    border: 2px solid var(--accent-color);
+}
+
+.btn-contact i {
+    font-size: 1rem;
+    height: 1rem;
+    width: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-contact:hover {
+    background: transparent;
+    color: white;
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+/* Информационный баннер инструктора */
+.instructor-info-banner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--border-radius);
+    color: white;
+    margin-bottom: 30px;
+}
+
+.instructor-info-banner i {
+    font-size: 3rem;
+    color: var(--accent-color);
+}
+
+.instructor-info-banner h3 {
+    margin-bottom: 5px;
+}
+
+.instructor-info-banner p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+/* Предупреждение, если инструктор не назначен */
+.no-instructor-warning {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--light-bg);
+    border-radius: var(--border-radius);
+    margin: 30px 0;
+}
+
+.no-instructor-warning i {
+    font-size: 4rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.no-instructor-warning h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.no-instructor-warning p {
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.no-instructor-warning .btn-contact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 30px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    border-radius: var(--border-radius-lg);
+    font-weight: 600;
+    transition: all 0.3s;
+    border: 2px solid var(--accent-color);
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.no-instructor-warning .btn-contact:hover {
+    background: transparent;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.no-instructor-warning .btn-contact i {
+    margin-right: 5px;
 }

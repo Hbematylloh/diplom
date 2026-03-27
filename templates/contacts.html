@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты - Автошкола{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Контакты</h1>
+        <p class="subtitle">Свяжитесь с нами любым удобным способом</p>
+    </section>
+
+    <!-- Основные контакты -->
+    <div class="contacts-main">
+        <div class="contact-info-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Адрес</h3>
+            <p>г. [Ваш город], ул. [Ваша улица], д. [номер]</p>
+            <p class="small">м. [станция метро], выход №[номер]</p>
+        </div>
+        <div class="contact-info-card">
+            <i class="fas fa-phone-alt"></i>
+            <h3>Телефон</h3>
+            <p>+7 (800) 123-45-67</p>
+            <p class="small">Ежедневно с 9:00 до 21:00</p>
+        </div>
+        <div class="contact-info-card">
+            <i class="fas fa-envelope"></i>
+            <h3>Email</h3>
+            <p>info@autoschool.ru</p>
+            <p class="small">Ответ в течение 24 часов</p>
+        </div>
+        <div class="contact-info-card">
+            <i class="fab fa-whatsapp"></i>
+            <h3>WhatsApp</h3>
+            <p>+7 (800) 123-45-67</p>
+            <p class="small">Быстрая связь с администратором</p>
+        </div>
+    </div>
+
+    <!-- Сотрудники -->
+    <div class="employees-section">
+        <h2>Наши сотрудники</h2>
+        <div class="employees-grid">
+            <!-- Администратор -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Администратор</h3>
+                    <p class="employee-name">Ирина Петрова</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234567" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-67
+                        </a>
+                        <a href="mailto:admin@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> admin@autoschool.ru
+                        </a>
+                        <a href="https://wa.me/78001234567" class="contact-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Пн-Пт: 9:00 - 20:00, Сб: 10:00 - 16:00</p>
+                </div>
+            </div>
+
+            <!-- Бухгалтер -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Бухгалтер</h3>
+                    <p class="employee-name">Елена Соколова</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234568" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-68
+                        </a>
+                        <a href="mailto:buh@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> buh@autoschool.ru
+                        </a>
+                        <a href="https://wa.me/78001234568" class="contact-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Пн-Пт: 10:00 - 18:00</p>
+                    <p class="employee-note">Вопросы по оплате и договорам</p>
+                </div>
+            </div>
+
+            <!-- Методист -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-chalkboard"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Методист</h3>
+                    <p class="employee-name">Анна Морозова</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234569" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-69
+                        </a>
+                        <a href="mailto:method@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> method@autoschool.ru
+                        </a>
+                        <a href="https://wa.me/78001234569" class="contact-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Пн, Ср, Пт: 11:00 - 17:00</p>
+                    <p class="employee-note">Вопросы по программе обучения</p>
+                </div>
+            </div>
+
+            <!-- Руководитель -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Руководитель</h3>
+                    <p class="employee-name">Сергей Михайлов</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234570" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-70
+                        </a>
+                        <a href="mailto:director@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> director@autoschool.ru
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Вт, Чт: 14:00 - 18:00</p>
+                    <p class="employee-note">Прием по предварительной записи</p>
+                </div>
+            </div>
+
+            <!-- Секретарь -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Секретарь</h3>
+                    <p class="employee-name">Ольга Смирнова</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234571" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-71
+                        </a>
+                        <a href="mailto:secretary@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> secretary@autoschool.ru
+                        </a>
+                        <a href="https://t.me/autoschool_secretary" class="contact-link" target="_blank">
+                            <i class="fab fa-telegram"></i> Telegram
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Пн-Пт: 9:00 - 19:00</p>
+                    <p class="employee-note">Запись на обучение, справки</p>
+                </div>
+            </div>
+
+            <!-- Техническая поддержка -->
+            <div class="employee-card">
+                <div class="employee-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="employee-info">
+                    <h3>Техподдержка</h3>
+                    <p class="employee-name">Алексей Иванов</p>
+                    <div class="employee-contacts">
+                        <a href="tel:+78001234572" class="contact-link">
+                            <i class="fas fa-phone"></i> +7 (800) 123-45-72
+                        </a>
+                        <a href="mailto:support@autoschool.ru" class="contact-link">
+                            <i class="fas fa-envelope"></i> support@autoschool.ru
+                        </a>
+                    </div>
+                    <p class="employee-schedule">Пн-Пт: 10:00 - 18:00</p>
+                    <p class="employee-note">Проблемы с сайтом и личным кабинетом</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Реквизиты -->
+    <div class="requisites-section">
+        <h2>Реквизиты</h2>
+        <div class="requisites-grid">
+            <div class="requisites-card">
+                <i class="fas fa-building"></i>
+                <div>
+                    <p><strong>ООО "Автошкола"</strong></p>
+                    <p>ИНН: 0000000000</p>
+                    <p>КПП: 000000000</p>
+                    <p>ОГРН: 0000000000000</p>
+                </div>
+            </div>
+            <div class="requisites-card">
+                <i class="fas fa-university"></i>
+                <div>
+                    <p><strong>Банковские реквизиты</strong></p>
+                    <p>Р/с: 00000000000000000000</p>
+                    <p>БИК: 000000000</p>
+                    <p>К/с: 00000000000000000000</p>
+                </div>
+            </div>
+            <div class="requisites-card">
+                <i class="fas fa-map-pin"></i>
+                <div>
+                    <p><strong>Юридический адрес</strong></p>
+                    <p>г. [Ваш город], ул. [Ваша улица], д. [номер], офис [номер]</p>
+                    <p>Почтовый адрес: 000000, г. [Ваш город], а/я 000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Карта (заглушка) -->
+    <div class="map-section">
+        <h2>Как нас найти</h2>
+        <div class="map-placeholder">
+            <i class="fas fa-map-marked-alt"></i>
+            <p>Интерактивная карта будет добавлена позже</p>
+            <small>Адрес: г. [Ваш город], ул. [Ваша улица], д. [номер]</small>
+        </div>
+        <div class="map-address">
+            <i class="fas fa-bus"></i>
+            <p><strong>Общественный транспорт:</strong> [станция метро/остановка], выход №[номер], далее пешком [расстояние] минут</p>
+            <i class="fas fa-car"></i>
+            <p><strong>На автомобиле:</strong> [ориентиры для проезда]</p>
+        </div>
+    </div>
+
+    <!-- Форма обратной связи -->
+    <div class="feedback-section">
+        <h2>Написать нам</h2>
+        <form id="feedbackForm" class="feedback-form">
+            <div class="form-row">
+                <div class="form-group half">
+                    <label><i class="fas fa-user"></i> Ваше имя</label>
+                    <input type="text" id="feedbackName" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group half">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="feedbackEmail" placeholder="ivanov@example.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Тема</label>
+                <select id="feedbackSubject">
+                    <option value="general">Общий вопрос</option>
+                    <option value="payment">Оплата и договоры</option>
+                    <option value="schedule">Расписание занятий</option>
+                    <option value="complaint">Жалоба или предложение</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-comment"></i> Сообщение</label>
+                <textarea id="feedbackMessage" rows="5" placeholder="Напишите ваш вопрос..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Отправить сообщение
+            </button>
+        </form>
+        <p class="form-note">
+            <i class="fas fa-info-circle"></i>
+            Мы свяжемся с вами в течение 24 часов
+        </p>
+    </div>
+</div>
+
+<script>
+    // Обработка формы обратной связи
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('feedbackName').value;
+        const email = document.getElementById('feedbackEmail').value;
+        const subject = document.getElementById('feedbackSubject').options[document.getElementById('feedbackSubject').selectedIndex].text;
+        const message = document.getElementById('feedbackMessage').value;
+        
+        alert(`✅ Сообщение отправлено!\n\nОт: ${name} (${email})\nТема: ${subject}\nСообщение: ${message}\n\nНаш менеджер свяжется с вами в ближайшее время.`);
+        
+        // Очистка формы
+        this.reset();
+    });
+</script>
+{% endblock %}

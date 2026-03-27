@@ -64,12 +64,11 @@ def create_tables(conn):
         password_hash VARCHAR(200) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         is_active BOOLEAN DEFAULT TRUE,
-        last_login TIMESTAMP,
         avatar_url VARCHAR(255),
         subgroup VARCHAR(10) DEFAULT 'A',
         instructor_id INTEGER,
         car VARCHAR(100),
-        car_type VARCHAR(20) DEFAULT 'manual',
+        phone VARCHAR(20),
         role VARCHAR(20) DEFAULT 'user'
     );
 
@@ -83,7 +82,7 @@ def create_tables(conn):
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
-    -- Таблица расписания
+    -- Таблица расписания (с car_type)
     CREATE TABLE IF NOT EXISTS schedule (
         id SERIAL PRIMARY KEY,
         group_type VARCHAR(50) NOT NULL,
@@ -115,9 +114,9 @@ def create_tables(conn):
         cursor.execute(tables_sql)
         conn.commit()
         print("[OK] Tables created:")
-        print("    - users (with subgroup, instructor_id, car, car_type, role)")
+        print("    - users (with subgroup, instructor_id, car, phone, role)")
         print("    - user_settings")
-        print("    - schedule (with cars field)")
+        print("    - schedule (with car_type, cars)")
     except psycopg2.Error as e:
         conn.rollback()
         print(f"[ERROR] {e}")
@@ -137,9 +136,9 @@ def create_test_user(conn):
         # Обычный тестовый пользователь
         user_password_hash = generate_password_hash('Test123')
         cursor.execute("""
-            INSERT INTO users (username, email, password_hash, created_at, is_active, subgroup, car_type, role) 
-            VALUES (%s, %s, %s, NOW(), %s, %s, %s, %s) RETURNING id
-        """, ('test_user', 'test@example.com', user_password_hash, True, 'A', 'manual', 'user'))
+            INSERT INTO users (username, email, password_hash, created_at, is_active, subgroup, car, phone, role) 
+            VALUES (%s, %s, %s, NOW(), %s, %s, %s, %s, %s) RETURNING id
+        """, ('test_user', 'test@example.com', user_password_hash, True, 'A', None, '+7 (999) 123-45-67', 'user'))
         
         user_id = cursor.fetchone()[0]
         
@@ -151,9 +150,9 @@ def create_test_user(conn):
         # Администратор
         admin_password_hash = generate_password_hash('admin123')
         cursor.execute("""
-            INSERT INTO users (username, email, password_hash, created_at, is_active, subgroup, car_type, role) 
-            VALUES (%s, %s, %s, NOW(), %s, %s, %s, %s) RETURNING id
-        """, ('admin', 'admin@autoschool.ru', admin_password_hash, True, 'A', 'manual', 'admin'))
+            INSERT INTO users (username, email, password_hash, created_at, is_active, subgroup, car, phone, role) 
+            VALUES (%s, %s, %s, NOW(), %s, %s, %s, %s, %s) RETURNING id
+        """, ('admin', 'admin@autoschool.ru', admin_password_hash, True, 'A', None, '+7 (999) 987-65-43', 'admin'))
         
         admin_id = cursor.fetchone()[0]
         
@@ -164,8 +163,8 @@ def create_test_user(conn):
         
         conn.commit()
         print("[OK] Test users created:")
-        print("    - User: test@example.com / Test123 (role: user)")
-        print("    - Admin: admin@autoschool.ru / admin123 (role: admin)")
+        print("    - User: test@example.com / Test123 (role: user, phone: +7 (999) 123-45-67)")
+        print("    - Admin: admin@autoschool.ru / admin123 (role: admin, phone: +7 (999) 987-65-43)")
         
     except psycopg2.Error as e:
         conn.rollback()
@@ -304,23 +303,6 @@ def show_statistics(conn):
     except Exception as e:
         print(f"\n  (subgroup info: {e})")
     
-    # Статистика по типу КПП
-    try:
-        cursor.execute("""
-            SELECT car_type, COUNT(*) as count 
-            FROM users 
-            WHERE car_type IS NOT NULL 
-            GROUP BY car_type
-        """)
-        car_types = cursor.fetchall()
-        if car_types:
-            print("\n🚗 Users by car type:")
-            for c in car_types:
-                type_name = "Механика" if c['car_type'] == 'manual' else "Автомат"
-                print(f"  {type_name}: {c['count']}")
-    except Exception as e:
-        print(f"\n  (car type info: {e})")
-    
     # Статистика по расписанию
     cursor.execute("""
         SELECT group_type, COUNT(*) as count 
@@ -352,19 +334,6 @@ def show_statistics(conn):
             print(f"    - Тип КПП: {i['car_type']} | ⭐ {i['rating']} | {i['experience']} лет")
             print(f"    - Телефон: {i['phone']}")
             print(f"    - Автомобили: {i['cars']}")
-    
-    # Теория
-    cursor.execute("""
-        SELECT group_type, COUNT(*) as count 
-        FROM schedule 
-        WHERE group_type LIKE 'theory_%' AND is_active = true 
-        GROUP BY group_type
-    """)
-    theory = cursor.fetchall()
-    if theory:
-        print("\n📖 Theory lessons:")
-        for t in theory:
-            print(f"  {t['group_type']}: {t['count']} lessons")
     
     print("=" * 60)
 
@@ -444,14 +413,14 @@ def quick_init():
     print("✅ DATABASE IS READY!")
     print("=" * 40)
     print("📊 Tables:")
-    print("   - users (with subgroup, instructor_id, car, car_type, role)")
+    print("   - users (with subgroup, instructor_id, car, phone, role)")
     print("   - user_settings")
-    print("   - schedule (with cars field)")
+    print("   - schedule (with car_type, cars)")
     print("\n👤 Test users:")
-    print("   User: test@example.com / Test123 (role: user)")
-    print("   Admin: admin@autoschool.ru / admin123 (role: admin)")
+    print("   User: test@example.com / Test123 (role: user, phone: +7 (999) 123-45-67)")
+    print("   Admin: admin@autoschool.ru / admin123 (role: admin, phone: +7 (999) 987-65-43)")
     print("\n👨‍🏫 Instructors available: 6")
-    print("   Each with multiple cars")
+    print("   Each with car_type and multiple cars")
     print("=" * 40)
 
 if __name__ == "__main__":

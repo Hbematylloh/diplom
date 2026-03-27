@@ -16,7 +16,7 @@
         <button class="tab-btn" data-tab="practice">🚗 Практика (вождение)</button>
     </div>
 
-    <!-- Блок ТЕОРИЯ -->
+    <!-- Блок ТЕОРИЯ (без изменений) -->
     <div id="theory-tab" class="tab-content active">
         <!-- Выбор подгруппы -->
         <div class="subgroup-selector">
@@ -200,173 +200,234 @@
         </div>
     </div>
 
-    <!-- Блок ПРАКТИКА (вождение) - только контакты инструкторов -->
+    <!-- Блок ПРАКТИКА (вождение) - только для назначенного инструктора -->
     <div id="practice-tab" class="tab-content" style="display: none;">
-        <div class="instructors-contact">
-            <div class="contact-header">
-                <i class="fas fa-phone-alt"></i>
-                <h2>Запись на практические занятия</h2>
-                <p>Для записи на вождение свяжитесь с инструктором напрямую по телефону</p>
+        {% if user_instructor %}
+        <div class="instructor-info-banner">
+            <i class="fas fa-chalkboard-user"></i>
+            <div>
+                <h3>Ваш инструктор: {{ user_instructor.instructor }}</h3>
+                <p>Тип КПП: {{ user_instructor.car_type }} | ⭐ {{ user_instructor.rating }} | {{ user_instructor.experience }} лет опыта</p>
+                <p>Телефон: {{ user_instructor.phone }} | WhatsApp: {{ user_instructor.whatsapp }}</p>
             </div>
-            
-            <div class="instructors-grid">
-                <!-- Инструктор 1 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Александр Петров</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Механика</span>
-                            <span><i class="fas fa-star"></i> 4.9</span>
-                            <span><i class="fas fa-clock"></i> 8 лет опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234567" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-67
-                            </a>
-                            <a href="https://wa.me/78001234567" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <!-- Инструктор 2 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Елена Смирнова</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Автомат</span>
-                            <span><i class="fas fa-star"></i> 5.0</span>
-                            <span><i class="fas fa-clock"></i> 6 лет опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234568" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-68
-                            </a>
-                            <a href="https://wa.me/78001234568" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
+        <div class="schedule-grid">
+            <!-- Понедельник -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-sun"></i></div>
+                    <h3>Понедельник</h3>
+                    <span class="day-badge">День 1</span>
                 </div>
-
-                <!-- Инструктор 3 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Дмитрий Иванов</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Механика/Автомат</span>
-                            <span><i class="fas fa-star"></i> 4.8</span>
-                            <span><i class="fas fa-clock"></i> 10 лет опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234569" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-69
-                            </a>
-                            <a href="https://wa.me/78001234569" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 09:00 - 11:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 2 места</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Инструктор 4 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Мария Козлова</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Автомат</span>
-                            <span><i class="fas fa-star"></i> 4.9</span>
-                            <span><i class="fas fa-clock"></i> 5 лет опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234570" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-70
-                            </a>
-                            <a href="https://wa.me/78001234570" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 11:00 - 13:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 3 места</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Инструктор 5 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Сергей Николаев</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Механика</span>
-                            <span><i class="fas fa-star"></i> 4.7</span>
-                            <span><i class="fas fa-clock"></i> 12 лет опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234571" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-71
-                            </a>
-                            <a href="https://wa.me/78001234571" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Инструктор 6 -->
-                <div class="instructor-contact-card">
-                    <div class="instructor-photo">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <div class="instructor-contact-info">
-                        <h3>Анна Волкова</h3>
-                        <div class="instructor-details">
-                            <span><i class="fas fa-car"></i> Автомат</span>
-                            <span><i class="fas fa-star"></i> 5.0</span>
-                            <span><i class="fas fa-clock"></i> 4 года опыта</span>
-                        </div>
-                        <div class="instructor-contacts">
-                            <a href="tel:+78001234572" class="contact-phone">
-                                <i class="fas fa-phone"></i> +7 (800) 123-45-72
-                            </a>
-                            <a href="https://wa.me/78001234572" class="contact-whatsapp" target="_blank">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 15:00 - 17:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 1 место</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Дополнительная информация -->
-            <div class="practice-info">
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <h4>Как записаться?</h4>
-                        <p>Выберите инструктора и свяжитесь с ним по телефону или WhatsApp. Инструктор поможет подобрать удобное время для занятий.</p>
+            <!-- Вторник -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-sun"></i></div>
+                    <h3>Вторник</h3>
+                    <span class="day-badge">День 2</span>
+                </div>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 3 места</span>
+                        </div>
+                    </div>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 2 места</span>
+                        </div>
                     </div>
                 </div>
-                <div class="info-box">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h4>Время занятий</h4>
-                        <p>Занятия проводятся ежедневно с 9:00 до 21:00. Время согласовывается индивидуально с инструктором.</p>
+            </div>
+
+            <!-- Среда -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <h3>Среда</h3>
+                    <span class="day-badge">День 3</span>
+                </div>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 09:00 - 11:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 1 место</span>
+                        </div>
+                    </div>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 13:00 - 15:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 2 места</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Четверг -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Четверг</h3>
+                    <span class="day-badge">День 4</span>
+                </div>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 12:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 2 места</span>
+                        </div>
+                    </div>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 16:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 4 места</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пятница -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-cloud-sun"></i></div>
+                    <h3>Пятница</h3>
+                    <span class="day-badge">День 5</span>
+                </div>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 09:00 - 11:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 1 место</span>
+                        </div>
+                    </div>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 15:00 - 17:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 3 места</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Суббота -->
+            <div class="schedule-card">
+                <div class="schedule-header">
+                    <div class="day-icon"><i class="fas fa-sun"></i></div>
+                    <h3>Суббота</h3>
+                    <span class="day-badge">День 6</span>
+                </div>
+                <div class="schedule-lessons">
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 10:00 - 13:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение (интенсив)</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 2 места</span>
+                        </div>
+                    </div>
+                    <div class="lesson">
+                        <div class="lesson-time"><i class="fas fa-clock"></i> 14:00 - 17:00</div>
+                        <div class="lesson-info">
+                            <span class="lesson-type practice">Вождение (интенсив)</span>
+                            <span class="lesson-title">Инструктор: {{ user_instructor.instructor }}</span>
+                            <span class="lesson-slots">свободно: 4 места</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="no-instructor-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Инструктор не назначен</h3>
+            <p>Для записи на вождение необходимо, чтобы администратор назначил вам инструктора.</p>
+            <p>Пожалуйста, свяжитесь с администратором для выбора инструктора.</p>
+            <a href="{{ url_for('contacts') }}" class="btn-contact">Связаться с администратором</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Модальное окно для записи -->
+<div id="practiceModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Запись на вождение</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form id="practiceForm" class="booking-form">
+            <input type="hidden" name="instructor_id" id="instructorId" value="{{ user_instructor.id if user_instructor else '' }}">
+            <div class="form-group">
+                <label><i class="fas fa-calendar"></i> День занятия</label>
+                <input type="text" id="practiceDay" readonly>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-clock"></i> Время занятия</label>
+                <input type="text" id="practiceTime" readonly>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Ваше имя</label>
+                <input type="text" id="studentName" value="{{ session.get('username', '') }}" readonly>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Ваш телефон</label>
+                <input type="text" id="studentPhone" value="{{ user.phone if user and user.phone else 'Не указан' }}" readonly>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-chalkboard-user"></i> Инструктор</label>
+                <input type="text" id="instructorName" value="{{ user_instructor.instructor if user_instructor else '' }}" readonly>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-check-circle"></i> Подтвердить запись
+            </button>
+        </form>
     </div>
 </div>
 
@@ -376,7 +437,6 @@
         btn.addEventListener('click', function() {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            
             const tab = this.dataset.tab;
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.style.display = 'none';
@@ -390,7 +450,6 @@
         btn.addEventListener('click', function() {
             document.querySelectorAll('.subgroup-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            
             const subgroup = this.dataset.subgroup;
             document.querySelectorAll('.subgroup-content').forEach(content => {
                 content.style.display = 'none';
@@ -398,5 +457,49 @@
             document.querySelector(`.subgroup-content[data-subgroup="${subgroup}"]`).style.display = 'block';
         });
     });
+
+    // Модальное окно для записи
+    const practiceModal = document.getElementById('practiceModal');
+    const closePracticeModal = practiceModal.querySelector('.close-modal');
+    
+    function openPracticeBooking(day, time) {
+        document.getElementById('practiceDay').value = day;
+        document.getElementById('practiceTime').value = time;
+        practiceModal.style.display = 'flex';
+    }
+    
+    closePracticeModal.onclick = function() {
+        practiceModal.style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        if (event.target === practiceModal) {
+            practiceModal.style.display = 'none';
+        }
+    }
+    
+    // Обработка формы записи
+    document.getElementById('practiceForm').onsubmit = function(e) {
+        e.preventDefault();
+        
+        const bookingData = {
+            type: 'practice',
+            day: document.getElementById('practiceDay').value,
+            time: document.getElementById('practiceTime').value,
+            name: document.getElementById('studentName').value,
+            phone: document.getElementById('studentPhone').value,
+            instructor: document.getElementById('instructorName').value,
+            date: new Date().toLocaleString()
+        };
+        
+        let bookings = JSON.parse(localStorage.getItem('drivingBookings') || '[]');
+        bookings.push(bookingData);
+        localStorage.setItem('drivingBookings', JSON.stringify(bookings));
+        
+        alert(`✅ Запись на вождение подтверждена!\n\n📅 ${bookingData.day}, ${bookingData.time}\n👤 ${bookingData.name}\n👨‍🏫 Инструктор: ${bookingData.instructor}\n\nНаш менеджер свяжется с вами для подтверждения.`);
+        
+        practiceModal.style.display = 'none';
+        this.reset();
+    }
 </script>
 {% endblock %}

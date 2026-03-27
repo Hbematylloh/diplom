@@ -24,8 +24,8 @@
                             <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Главная</a></li>
                             <li><a href="{{ url_for('programs') }}"><i class="fas fa-book-open"></i> Программы</a></li>
                             <li><a href="{{ url_for('exam') }}"><i class="fas fa-car"></i> Экзамен ПДД</a></li>
+                            <li><a href="{{ url_for('contacts') }}"><i class="fas fa-phone-alt"></i> Контакты</a></li>
                             
-                            <!-- Ссылка для админа -->
                             {% if session.get('is_admin') %}
                             <li><a href="{{ url_for('admin_schedule') }}"><i class="fas fa-cog"></i> Админ-панель</a></li>
                             {% endif %}
@@ -80,7 +80,7 @@
                     <ul>
                         <li><i class="fas fa-phone"></i> 8 (800) 123-45-67</li>
                         <li><i class="fas fa-envelope"></i> info@autoschool.ru</li>
-                        <li><i class="fas fa-map-marker-alt"></i> г. Москва, ул. Ленина, 1</li>
+                        <li><i class="fas fa-map-marker-alt"></i> г. [Ваш город], ул. [Ваша улица], д. [номер]</li>
                         <li><i class="fas fa-clock"></i> Ежедневно 9:00 - 21:00</li>
                     </ul>
                 </div>
@@ -105,7 +105,7 @@
         </div>
     </footer>
 
-    <!-- МОДАЛЬНОЕ ОКНО ГАМБУРГЕР-МЕНЮ -->
+    <!-- ГАМБУРГЕР-МЕНЮ -->
     <div class="hamburger-menu" id="hamburgerMenu">
         <div class="hamburger-menu-content">
             <div class="hamburger-menu-header">
@@ -146,7 +146,15 @@
                     </div>
                 </a>
 
-                <a href="#" class="menu-card">
+                <a href="{{ url_for('contacts') }}" class="menu-card">
+                    <div class="menu-card-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="menu-card-content">
+                        <h4>Контакты</h4>
+                        <p>Свяжитесь с нами</p>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('faq') }}" class="menu-card">
                     <div class="menu-card-icon"><i class="fas fa-question-circle"></i></div>
                     <div class="menu-card-content">
                         <h4>FAQ</h4>
@@ -175,14 +183,6 @@
                     <div class="menu-card-content">
                         <h4>Лицензии</h4>
                         <p>Официальные документы</p>
-                    </div>
-                </a>
-
-                <a href="#" class="menu-card">
-                    <div class="menu-card-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="menu-card-content">
-                        <h4>Контакты</h4>
-                        <p>Как нас найти</p>
                     </div>
                 </a>
 

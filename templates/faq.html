@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - Часто задаваемые вопросы{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Часто задаваемые вопросы</h1>
+        <p class="subtitle">Ответы на самые популярные вопросы об обучении</p>
+    </section>
+
+    <!-- Поиск по вопросам -->
+    <div class="faq-search">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="faqSearch" placeholder="Поиск по вопросам...">
+        </div>
+    </div>
+
+    <!-- Категории вопросов -->
+    <div class="faq-categories">
+        <button class="category-btn active" data-category="all">Все вопросы</button>
+        <button class="category-btn" data-category="general">Общие вопросы</button>
+        <button class="category-btn" data-category="training">Обучение</button>
+        <button class="category-btn" data-category="payment">Оплата</button>
+        <button class="category-btn" data-category="exam">Экзамен</button>
+        <button class="category-btn" data-category="documents">Документы</button>
+    </div>
+
+    <!-- Список вопросов -->
+    <div class="faq-list">
+        <!-- Общие вопросы -->
+        <div class="faq-category-group" data-category="general">
+            <h2 class="category-title">Общие вопросы</h2>
+            
+            <div class="faq-item" data-question="сколько длится обучение? обучение длительность срок">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Сколько длится обучение в автошколе?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Стандартный курс обучения на категорию B составляет 2.5 - 3 месяца. Включает теоретические занятия (134 часа) и практическое вождение (56 часов). Возможно ускоренное обучение по индивидуальному графику.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="возраст обучение возраст">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>С какого возраста можно начать обучение?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>К обучению допускаются лица, достигшие 16 лет. К сдаче экзаменов в ГИБДД допускаются с 17 лет, а получить водительское удостоверение можно с 18 лет.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="категории категория обучение">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Какие категории доступны для обучения?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>В нашей автошколе вы можете обучиться на категории A (мотоциклы), B (легковые автомобили). Также доступны подкатегории A1 и B1.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Обучение -->
+        <div class="faq-category-group" data-category="training">
+            <h2 class="category-title">Обучение</h2>
+            
+            <div class="faq-item" data-question="теория занятия расписание">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Как проходят теоретические занятия?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Теоретические занятия проходят в группах до 20 человек. Уроки проводятся 2-3 раза в неделю по 2-4 часа. Расписание можно выбрать при записи. Также доступны онлайн-трансляции для пропустивших занятия.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="вождение практика инструктор">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Как проходят занятия по вождению?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Практические занятия проводятся индивидуально с инструктором. Вы сами выбираете удобное время. Занятия длятся 1-2 часа. Автомобиль предоставляется автошколой.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="график гибкий вечер">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Есть ли группы выходного дня или вечерние занятия?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Да, у нас есть группы выходного дня (суббота/воскресенье) и вечерние группы (с 18:00 до 21:00). Вы можете выбрать наиболее удобный график при записи.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="индивидуальный обучение">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Можно ли заниматься индивидуально?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Да, мы предлагаем индивидуальные занятия по теории и практике. Стоимость индивидуального обучения выше, но график полностью подстраивается под вас.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Оплата -->
+        <div class="faq-category-group" data-category="payment">
+            <h2 class="category-title">Оплата</h2>
+            
+            <div class="faq-item" data-question="стоимость цена оплата">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Сколько стоит обучение?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Стоимость обучения зависит от выбранной программы. Базовая программа - 60 000 ₽, Максимум - 73 000 ₽, Экспресс - 70 000 ₽. Подробнее с ценами можно ознакомиться на странице <a href="{{ url_for('programs') }}">Программы обучения</a>.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="рассрочка кредит">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Можно ли оплатить обучение в рассрочку?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Да, мы предлагаем беспроцентную рассрочку. Первый взнос - 10 000 ₽ при заключении договора, остальное оплачивается в течение 2-3 месяцев. Также возможно оформление кредита.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="налоговый вычет возврат">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Можно ли получить налоговый вычет за обучение?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Да, вы можете вернуть 13% от стоимости обучения. Для этого необходимо сохранить все документы об оплате и предоставить их в налоговую инспекцию.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экзамен -->
+        <div class="faq-category-group" data-category="exam">
+            <h2 class="category-title">Экзамен</h2>
+            
+            <div class="faq-item" data-question="внутренний экзамен">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Что такое внутренний экзамен?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Внутренний экзамен проводится в автошколе после завершения обучения. Состоит из теоретической части (40 вопросов) и практической (вождение). Успешная сдача внутреннего экзамена допускает к экзамену в ГИБДД.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="гибдд гаи сдача">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Как проходит экзамен в ГИБДД?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Экзамен в ГИБДД состоит из трех этапов: теория (20 вопросов), площадка (упражнения), город (вождение по маршруту). Наши инструкторы помогают подготовиться ко всем этапам.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="пересдача пересдать">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Что если не сдал экзамен с первого раза?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>При несдаче экзамена вы можете пройти дополнительные занятия и пересдать. Пересдача внутреннего экзамена бесплатная. Пересдача в ГИБДД возможна через 7 дней (теория) и 14 дней (практика).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Документы -->
+        <div class="faq-category-group" data-category="documents">
+            <h2 class="category-title">Документы</h2>
+            
+            <div class="faq-item" data-question="документы список">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Какие документы нужны для зачисления?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Для зачисления необходимы: паспорт, медицинская справка (086/у), 2 фотографии 3x4, СНИЛС. При отсутствии медицинской справки мы поможем ее оформить.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="медсправка медицинская">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Где получить медицинскую справку?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Медицинскую справку можно получить в любой поликлинике по месту жительства или в специализированных медицинских центрах. Мы сотрудничаем с медицинскими центрами, где вы можете пройти осмотр в день обращения.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-question="права водительское удостоверение">
+                <div class="faq-question">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Как получить водительское удостоверение после сдачи экзамена?</span>
+                </div>
+                <div class="faq-answer">
+                    <p>После успешной сдачи экзамена в ГИБДД вы получаете водительское удостоверение в отделении ГИБДД в течение 10 рабочих дней. Мы помогаем с подачей документов.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Если вопрос не найден -->
+    <div id="noResults" class="no-results" style="display: none;">
+        <i class="fas fa-search"></i>
+        <p>Ничего не найдено</p>
+        <small>Попробуйте изменить поисковый запрос</small>
+    </div>
+
+    <!-- Не нашли ответ? -->
+    <div class="faq-contact">
+        <div class="contact-card">
+            <i class="fas fa-question-circle"></i>
+            <h3>Не нашли ответ на свой вопрос?</h3>
+            <p>Свяжитесь с нами, и мы поможем вам</p>
+            <div class="contact-buttons">
+                <a href="{{ url_for('contacts') }}" class="btn-contact">Написать нам</a>
+                <a href="tel:+78001234567" class="btn-contact">Позвонить</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Поиск по вопросам
+    const searchInput = document.getElementById('faqSearch');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const noResults = document.getElementById('noResults');
+    const categoryGroups = document.querySelectorAll('.faq-category-group');
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    function filterFAQs() {
+        let hasVisible = false;
+        
+        categoryGroups.forEach(group => {
+            const groupCategory = group.dataset.category;
+            let groupHasVisible = false;
+            
+            const items = group.querySelectorAll('.faq-item');
+            items.forEach(item => {
+                const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer').textContent.toLowerCase();
+                const searchTerm = currentSearch.toLowerCase();
+                
+                const matchesSearch = searchTerm === '' || 
+                    questionText.includes(searchTerm) || 
+                    answerText.includes(searchTerm);
+                
+                const matchesCategory = currentCategory === 'all' || groupCategory === currentCategory;
+                
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = 'block';
+                    groupHasVisible = true;
+                    hasVisible = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            group.style.display = groupHasVisible ? 'block' : 'none';
+        });
+        
+        noResults.style.display = hasVisible ? 'none' : 'flex';
+    }
+
+    // Поиск при вводе
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        filterFAQs();
+    });
+
+    // Фильтр по категориям
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+            filterFAQs();
+        });
+    });
+
+    // Открытие/закрытие ответов
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const parent = question.closest('.faq-item');
+            const isOpen = parent.classList.contains('open');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('open');
+            });
+            
+            if (!isOpen) {
+                parent.classList.add('open');
+            }
+        });
+    });
+</script>
+{% endblock %}

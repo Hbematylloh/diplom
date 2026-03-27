@@ -44,8 +44,8 @@ class User(db.Model):
     subgroup = db.Column(db.String(10), default='A')
     instructor_id = db.Column(db.Integer, db.ForeignKey('schedule.id'), nullable=True)
     car = db.Column(db.String(100), nullable=True)
-    car_type = db.Column(db.String(20), default='manual')
-    role = db.Column(db.String(20), default='user')  # 'admin' или 'user'
+    role = db.Column(db.String(20), default='user')
+    phone = db.Column(db.String(20), nullable=True)
     
     settings = db.relationship('UserSettings', backref='user', uselist=False, cascade='all, delete-orphan')
     instructor = db.relationship('Schedule', foreign_keys=[instructor_id])
@@ -119,33 +119,45 @@ with app.app_context():
 # ========== МАРШРУТЫ ==========
 @app.route('/')
 def index():
-    """Главная страница"""
     return render_template('index.html')
 
 @app.route('/programs')
 def programs():
-    """Страница программ обучения"""
     return render_template('programs.html')
 
 @app.route('/exam')
 def exam():
-    """Страница с экзаменом (виджет ПДД)"""
     return render_template('ticket.html')
 
 @app.route('/fleet')
 def fleet():
-    """Страница автопарка"""
     return render_template('fleet.html')
 
 @app.route('/instructors')
 def instructors():
-    """Страница инструкторов"""
     return render_template('instructors.html')
 
 @app.route('/schedule')
 def schedule():
     """Страница расписания"""
-    return render_template('schedule.html')
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user = User.query.get(session['user_id'])
+    user_instructor = None
+    
+    if user.instructor_id:
+        user_instructor = Schedule.query.filter_by(id=user.instructor_id, group_type='instructor', is_active=True).first()
+    
+    return render_template('schedule.html', user=user, user_instructor=user_instructor)
+
+@app.route('/contacts')
+def contacts():
+    return render_template('contacts.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -246,9 +258,6 @@ def login():
             session['is_admin'] = user.is_admin()
             session['role'] = user.role
             
-            user.last_login = datetime.utcnow()
-            db.session.commit()
-            
             return jsonify({
                 'success': True,
                 'message': 'Вход выполнен успешно!',
@@ -321,6 +330,23 @@ def update_car():
     if user:
         user.car = request.form.get('car')
         db.session.commit()
+    return redirect(url_for('profile', user_id=user_id))
+
+@app.route('/update_phone', methods=['POST'])
+def update_phone():
+    """Обновление телефона пользователя"""
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = request.form.get('user_id')
+    # Проверяем права: либо это свой профиль, либо админ
+    if int(user_id) != session['user_id'] and not session.get('is_admin'):
+        return redirect(url_for('profile', user_id=session['user_id']))
+    
+    user = User.query.get_or_404(user_id)
+    user.phone = request.form.get('phone')
+    db.session.commit()
+    
     return redirect(url_for('profile', user_id=user_id))
 
 @app.route('/admin/users')

@@ -12,13 +12,32 @@
             <div class="profile-info">
                 <h1>{{ user.username }}</h1>
                 <p class="profile-email">{{ user.email }}</p>
-                <p class="profile-date">Студент с: {{ user.created_at.strftime('%d.%m.%Y') }}</p>
+                <p class="profile-date">Студент с: {{ user.created_at.strftime('%d.%m.%Y') if user.created_at else 'Неизвестно' }}</p>
+                {% if session.get('is_admin') and session.get('user_id') != user.id %}
+                <div class="admin-badge">
+                    <i class="fas fa-crown"></i> Режим редактирования (админ)
+                </div>
+                {% endif %}
             </div>
         </div>
         
         <div class="profile-stats">
             <h2>Моя учебная информация</h2>
             <div class="stats-grid">
+                <!-- Телефон -->
+                <div class="stat-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>Телефон</h3>
+                    <p class="stat-value">
+                        {% if user.phone %}
+                        {{ user.phone }}
+                        {% else %}
+                        Не указан
+                        {% endif %}
+                    </p>
+                    <button class="stat-edit" onclick="openModal('phone')">Изменить</button>
+                </div>
+
                 <!-- Подгруппа -->
                 <div class="stat-card">
                     <i class="fas fa-users"></i>
@@ -64,12 +83,31 @@
     </div>
 </div>
 
-<!-- Модальные окна (только для админа) -->
+<!-- Модальное окно для телефона (доступно всем пользователям) -->
+<div id="phoneModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Редактирование телефона</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form action="{{ url_for('update_phone') }}" method="POST" class="modal-form">
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Номер телефона</label>
+                <input type="tel" name="phone" value="{{ user.phone or '' }}" placeholder="+7 (___) ___-__-__" required>
+                <div class="form-hint">В формате: +7 (999) 123-45-67</div>
+            </div>
+            <button type="submit" class="btn-submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<!-- Модальные окна для админа -->
 {% if session.get('is_admin') %}
 <div id="subgroupModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Выбор подгруппы</h3>
+            <h3>Выбор подгруппы для {{ user.username }}</h3>
             <span class="close-modal">&times;</span>
         </div>
         <form action="{{ url_for('update_subgroup') }}" method="POST" class="modal-form">
@@ -90,7 +128,7 @@
 <div id="instructorModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Выбор инструктора</h3>
+            <h3>Выбор инструктора для {{ user.username }}</h3>
             <span class="close-modal">&times;</span>
         </div>
         <form action="{{ url_for('update_instructor') }}" method="POST" class="modal-form">
@@ -117,7 +155,7 @@
 <div id="carModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Выбор автомобиля</h3>
+            <h3>Выбор автомобиля для {{ user.username }}</h3>
             <span class="close-modal">&times;</span>
         </div>
         <form action="{{ url_for('update_car') }}" method="POST" class="modal-form">
@@ -143,40 +181,15 @@
         </form>
     </div>
 </div>
+{% endif %}
 
 <script>
-    const modals = {
-        subgroup: document.getElementById('subgroupModal'),
-        instructor: document.getElementById('instructorModal'),
-        car: document.getElementById('carModal')
-    };
-    
     function openModal(type) {
-        if (modals[type]) modals[type].style.display = 'flex';
+        const modal = document.getElementById(type + 'Modal');
+        if (modal) modal.style.display = 'flex';
     }
     
-    const instructorSelect = document.getElementById('instructorSelect');
-    const carSelect = document.getElementById('carSelect');
-    
-    if (instructorSelect) {
-        instructorSelect.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const cars = selectedOption.getAttribute('data-cars');
-            
-            if (carSelect && cars) {
-                const carList = cars.split(',');
-                carSelect.innerHTML = '<option value="">-- Выберите автомобиль --</option>';
-                carList.forEach(car => {
-                    const trimmedCar = car.trim();
-                    const option = document.createElement('option');
-                    option.value = trimmedCar;
-                    option.textContent = trimmedCar;
-                    carSelect.appendChild(option);
-                });
-            }
-        });
-    }
-    
+    // Закрытие модальных окон
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.onclick = function() {
             document.querySelectorAll('.modal').forEach(modal => {
@@ -190,6 +203,30 @@
             event.target.style.display = 'none';
         }
     }
+    
+    // Обновление списка автомобилей при выборе инструктора
+    const instructorSelect = document.getElementById('instructorSelect');
+    const carSelect = document.getElementById('carSelect');
+    
+    if (instructorSelect && carSelect) {
+        instructorSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const cars = selectedOption.getAttribute('data-cars');
+            
+            if (cars) {
+                const carList = cars.split(',');
+                carSelect.innerHTML = '<option value="">-- Выберите автомобиль --</option>';
+                carList.forEach(car => {
+                    const trimmedCar = car.trim();
+                    const option = document.createElement('option');
+                    option.value = trimmedCar;
+                    option.textContent = trimmedCar;
+                    carSelect.appendChild(option);
+                });
+            } else {
+                carSelect.innerHTML = '<option value="">-- Нет доступных автомобилей --</option>';
+            }
+        });
+    }
 </script>
-{% endif %}
 {% endblock %}

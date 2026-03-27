@@ -1,72 +1,58 @@
-{% extends "base.html" %} {% block title %}Автошкола - Главная{% endblock %} {% block content %}
+{% extends "base.html" %}
+
+{% block title %}Автошкола - Главная{% endblock %}
+
+{% block content %}
 <div class="container">
     <!-- Hero секция -->
     <section class="hero">
         <h1>Автошкола</h1>
         <p>Стань уверенным водителем с нами! Обучение на категории A, B</p>
+        {% if not session.get('user_id') %}
         <a href="{{ url_for('register') }}" class="btn-start">Записаться на обучение →</a>
+        {% endif %}
     </section>
 
     <!-- Преимущества -->
     <section class="features">
         <h2>Почему выбирают нас?</h2>
         <div class="features-grid">
-            <div class="feature">
-                <i class="fas fa-car-side feature-icon"></i>
-                <h3>Современный автопарк</h3>
-                <p>Автомобили не старше 3 лет с автоматической и механической коробкой передач</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-chalkboard-teacher feature-icon"></i>
-                <h3>Опытные инструкторы</h3>
-                <p>Профессионалы с многолетним стажем и индивидуальным подходом</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-clock feature-icon"></i>
-                <h3>Гибкий график</h3>
-                <p>Обучение в удобное время, включая вечерние часы и выходные</p>
-            </div>
-            <!-- Блок с 98% УДАЛЕН -->
-        </div>
-    </section>
+            <a href="{{ url_for('fleet') }}" class="feature-link">
+                <div class="feature">
+                    <i class="fas fa-car-side feature-icon"></i>
+                    <h3>Современный автопарк</h3>
+                    <p>Автомобили не старше 3 лет с автоматической и механической коробкой передач</p>
+                    <span class="feature-arrow">Подробнее →</span>
+                </div>
+            </a>
 
-    <!-- Меню с будущими функциями (заглушка) -->
-    <section class="future-menu">
-        <h2>Скоро на сайте</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <i class="fas fa-book-open"></i>
-                <span>Программы обучения</span>
-                <small>Скоро</small>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-car"></i>
-                <span>Автопарк</span>
-                <small>Скоро</small>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-question-circle"></i>
-                <span>Часто задаваемые вопросы</span>
-                <small>Скоро</small>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-info-circle"></i>
-                <span>О нас</span>
-                <small>Скоро</small>
-            </div>
-            <div class="menu-item">
-                <i class="fas fa-users"></i>
-                <span>Инструкторы</span>
-                <small>Скоро</small>
-            </div>
+            <a href="{{ url_for('instructors') }}" class="feature-link">
+                <div class="feature">
+                    <i class="fas fa-chalkboard-teacher feature-icon"></i>
+                    <h3>Опытные инструкторы</h3>
+                    <p>Профессионалы с многолетним стажем и индивидуальным подходом</p>
+                    <span class="feature-arrow">Подробнее →</span>
+                </div>
+            </a>
+
+            <a href="{{ url_for('schedule') }}" class="feature-link">
+                <div class="feature">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h3>Гибкий график</h3>
+                    <p>Обучение в удобное время, включая вечерние часы и выходные</p>
+                    <span class="feature-arrow">Подробнее →</span>
+                </div>
+            </a>
         </div>
     </section>
 
     <!-- Призыв к действию -->
+    {% if not session.get('user_id') %}
     <section class="cta">
         <h2>Начни обучение прямо сейчас!</h2>
         <p>Оставьте заявку и мы свяжемся с вами для консультации</p>
         <a href="{{ url_for('register') }}" class="btn-cta">Записаться</a>
     </section>
+    {% endif %}
 </div>
 {% endblock %}
