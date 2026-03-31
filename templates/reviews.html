@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% block title %}Отзывы - Автошкола{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Заголовок страницы -->
+    <section class="page-header">
+        <h1>Отзывы наших учеников</h1>
+        <p class="subtitle">Реальные истории успеха выпускников нашей автошколы</p>
+    </section>
+
+    <!-- Статистика отзывов -->
+    <div class="reviews-stats">
+        <div class="stat-card">
+            <i class="fas fa-star"></i>
+            <h2>{{ stats.avg_rating }}</h2>
+            <p>Средний рейтинг</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-users"></i>
+            <h2>{{ stats.total }}</h2>
+            <p>Отзывов</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-thumbs-up"></i>
+            <h2>{{ stats.positive_percent }}%</h2>
+            <p>Положительных</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-car"></i>
+            <h2>? лет</h2>
+            <p>На рынке</p>
+        </div>
+    </div>
+
+    <!-- Фильтр по рейтингу -->
+    <div class="reviews-filters">
+        <button class="filter-btn active" data-rating="all">Все отзывы</button>
+        <button class="filter-btn" data-rating="5">⭐⭐⭐⭐⭐ 5</button>
+        <button class="filter-btn" data-rating="4">⭐⭐⭐⭐ 4+</button>
+        <button class="filter-btn" data-rating="3">⭐⭐⭐ 3+</button>
+    </div>
+
+    <!-- Список отзывов -->
+    <div class="reviews-list">
+        {% if reviews %}
+            {% for review in reviews %}
+            <div class="review-card" data-rating="{{ review.rating }}">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="reviewer-details">
+                            <h3>{{ review.user_name }}</h3>
+                            <div class="review-rating">
+                                {% for i in range(5) %}
+                                    {% if i < review.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <span class="review-date">{{ review.created_at.strftime('%d.%m.%Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p>{{ review.text }}</p>
+                </div>
+                <div class="review-footer">
+                    <span class="review-category">📚 Категория {{ review.category }}</span>
+                    <span class="review-like" data-id="{{ review.id }}">
+                        <i class="far fa-thumbs-up"></i> <span class="likes-count">{{ review.likes }}</span>
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-reviews-message">
+                <i class="fas fa-comment-dots"></i>
+                <h3>Отзывов пока нет</h3>
+                <p>Будьте первым, кто поделится своим опытом обучения!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Блок добавления отзыва (только для авторизованных) -->
+<div class="add-review-section">
+    <div class="add-review-card">
+        <i class="fas fa-pen-alt"></i>
+        <h3>Оставить отзыв</h3>
+        <p>Поделитесь своим опытом обучения в нашей автошколе</p>
+        {% if session.get('user_id') %}
+            <button class="btn-review" onclick="openReviewModal()">Написать отзыв</button>
+        {% else %}
+            <div class="login-to-review">
+                <p>Чтобы оставить отзыв, <a href="{{ url_for('login') }}">войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a></p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+
+<!-- Модальное окно для добавления отзыва -->
+<div id="reviewModal" class="modal">
+    <div class="modal-content modal-review">
+        <div class="modal-header">
+            <h3><i class="fas fa-star"></i> Оставить отзыв</h3>
+            <span class="close-modal">&times;</span>
+        </div>
+        <form id="reviewForm" class="review-form">
+            <div class="form-group">
+                <label><i class="fas fa-star"></i> Оценка</label>
+                <div class="rating-input">
+                    <span class="rating-star" data-value="1">☆</span>
+                    <span class="rating-star" data-value="2">☆</span>
+                    <span class="rating-star" data-value="3">☆</span>
+                    <span class="rating-star" data-value="4">☆</span>
+                    <span class="rating-star" data-value="5">☆</span>
+                </div>
+                <input type="hidden" id="reviewRating" value="5">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-comment"></i> Ваш отзыв</label>
+                <textarea id="reviewText" rows="6" placeholder="Расскажите о своем опыте обучения..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> Категория</label>
+                <select id="reviewCategory">
+                    <option value="B">Категория B</option>
+                    <option value="A">Категория A</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Отправить отзыв
+            </button>
+            <p class="review-note">
+                <i class="fas fa-info-circle"></i>
+                Ваш отзыв может будет удален после проверки модератором
+            </p>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Фильтрация по рейтингу
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const reviewCards = document.querySelectorAll('.review-card');
+
+    if (filterBtns.length > 0 && reviewCards.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const rating = this.dataset.rating;
+                
+                reviewCards.forEach(card => {
+                    if (rating === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const cardRating = parseInt(card.dataset.rating);
+                        if (rating === '5' && cardRating >= 5) {
+                            card.style.display = 'flex';
+                        } else if (rating === '4' && cardRating >= 4) {
+                            card.style.display = 'flex';
+                        } else if (rating === '3' && cardRating >= 3) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    // Лайки
+    const likeBtns = document.querySelectorAll('.review-like');
+    likeBtns.forEach(likeBtn => {
+        likeBtn.addEventListener('click', async function() {
+            const reviewId = this.dataset.id;
+            const likesSpan = this.querySelector('.likes-count');
+            
+            if (!reviewId) return;
+            
+            try {
+                const response = await fetch(`/api/reviews/like/${reviewId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    likesSpan.textContent = data.likes;
+                    this.style.pointerEvents = 'none';
+                    this.style.opacity = '0.6';
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        });
+    });
+
+    // Рейтинг в модальном окне
+    const ratingStars = document.querySelectorAll('.rating-star');
+    const ratingInput = document.getElementById('reviewRating');
+
+    if (ratingStars.length > 0 && ratingInput) {
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                const value = parseInt(this.dataset.value);
+                ratingInput.value = value;
+                
+                ratingStars.forEach((s, index) => {
+                    if (index < value) {
+                        s.textContent = '★';
+                        s.classList.add('active');
+                    } else {
+                        s.textContent = '☆';
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+    }
+
+    // Модальное окно
+    const modal = document.getElementById('reviewModal');
+    
+    if (modal) {
+        const closeModal = modal.querySelector('.close-modal');
+        
+        window.openReviewModal = function() {
+            modal.style.display = 'flex';
+            document.body.classList.add('modal-open');
+        }
+        
+        if (closeModal) {
+            closeModal.onclick = function() {
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+        }
+        
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+        }
+    }
+
+    // Отправка формы
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.onsubmit = async function(e) {
+            e.preventDefault();
+            
+            const rating = document.getElementById('reviewRating').value;
+            const text = document.getElementById('reviewText').value;
+            const category = document.getElementById('reviewCategory').value;
+            
+            if (!text) {
+                alert('Пожалуйста, напишите ваш отзыв');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rating: parseInt(rating),
+                        text: text,
+                        category: category
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    const modal = document.getElementById('reviewModal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                        document.body.classList.remove('modal-open');
+                    }
+                    reviewForm.reset();
+                    
+                    // Сброс звезд
+                    const ratingStars = document.querySelectorAll('.rating-star');
+                    ratingStars.forEach((s, index) => {
+                        s.textContent = '☆';
+                        s.classList.remove('active');
+                    });
+                    document.getElementById('reviewRating').value = 5;
+                    
+                    // Обновить страницу
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    alert(data.message);
+                }
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка. Попробуйте позже.');
+            }
+        }
+    }
+</script>
+{% endblock %}

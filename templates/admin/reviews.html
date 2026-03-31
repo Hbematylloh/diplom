@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель - Отзывы{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="admin-header">
+        <h1><i class="fas fa-star"></i> Управление отзывами</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('admin_schedule') }}" class="btn-admin-back">
+                <i class="fas fa-arrow-left"></i> Назад к расписанию
+            </a>
+        </div>
+    </div>
+
+    <div class="admin-section">
+        <div class="schedule-table">
+            <table class="reviews-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Пользователь</th>
+                        <th>Оценка</th>
+                        <th>Отзыв</th>
+                        <th>Категория</th>
+                        <th>Лайки</th>
+                        <th>Дата</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.id }}</td>
+                        <td><strong>{{ review.user_name }}</strong></td>
+                        <td>
+                            <div class="review-rating">
+                                {% for i in range(5) %}
+                                    {% if i < review.rating %}
+                                        <i class="fas fa-star" style="color: #ffc107;"></i>
+                                    {% else %}
+                                        <i class="far fa-star" style="color: #ccc;"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td class="review-text-cell">
+                            <div class="review-text">
+                                {{ review.text }}
+                            </div>
+                        </td>
+                        <td>{{ review.category }}</td>
+                        <td>{{ review.likes }}</td>
+                        <td>{{ review.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td>
+                            <a href="{{ url_for('admin_delete_review', id=review.id) }}" 
+                               class="btn-delete" 
+                               onclick="return confirm('Удалить этот отзыв?')">
+                                <i class="fas fa-trash"></i> Удалить
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-comment-slash" style="font-size: 2rem; color: var(--text-light);"></i>
+                            <p style="margin-top: 10px;">Отзывов пока нет</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

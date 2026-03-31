@@ -104,6 +104,20 @@ def create_tables(conn):
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+        -- Таблица отзывов
+    CREATE TABLE IF NOT EXISTS reviews (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+        user_name VARCHAR(100) NOT NULL,
+        rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+        text TEXT NOT NULL,
+        category VARCHAR(20) DEFAULT 'B',
+        likes INTEGER DEFAULT 0,
+        is_approved BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
     -- Индексы
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
     CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);

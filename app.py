@@ -137,6 +137,95 @@ def fleet():
 def instructors():
     return render_template('instructors.html')
 
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)  # может быть анонимным
+    user_name = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  # 1-5
+    text = db.Column(db.Text, nullable=False)
+    category = db.Column(db.String(20), default='B')
+    likes = db.Column(db.Integer, default=0)
+    is_approved = db.Column(db.Boolean, default=False)  # модерация
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Review {self.user_name} - {self.rating}>'
+    
+# ========== ОТЗЫВЫ ==========
+
+@app.route('/reviews')
+def reviews():
+    """Страница отзывов"""
+    total_reviews = Review.query.count()
+    
+    if total_reviews > 0:
+        avg_rating = db.session.query(db.func.avg(Review.rating)).scalar()
+        positive_reviews = Review.query.filter(Review.rating >= 4).count()
+        positive_percent = round((positive_reviews / total_reviews) * 100)
+    else:
+        avg_rating = 0
+        positive_percent = 0
+    
+    all_reviews = Review.query.order_by(Review.created_at.desc()).all()
+    
+    stats = {
+        'total': total_reviews,
+        'avg_rating': round(avg_rating, 1) if avg_rating else 0,
+        'positive_percent': positive_percent
+    }
+    
+    return render_template('reviews.html', reviews=all_reviews, stats=stats)
+
+@app.route('/api/reviews', methods=['POST'])
+def add_review():
+    """Добавление отзыва (только для авторизованных)"""
+    if 'user_id' not in session:
+        return jsonify({'success': False, 'message': 'Только авторизованные пользователи могут оставлять отзывы'}), 401
+    
+    data = request.get_json()
+    user = User.query.get(session['user_id'])
+    
+    new_review = Review(
+        user_id=session['user_id'],
+        user_name=user.username,
+        rating=data.get('rating'),
+        text=data.get('text'),
+        category=data.get('category', 'B'),
+        is_approved=True
+    )
+    
+    db.session.add(new_review)
+    db.session.commit()
+    
+    return jsonify({'success': True, 'message': 'Спасибо за отзыв!'})
+
+@app.route('/api/reviews/like/<int:id>', methods=['POST'])
+def like_review(id):
+    """Лайк отзыва"""
+    review = Review.query.get_or_404(id)
+    review.likes += 1
+    db.session.commit()
+    return jsonify({'success': True, 'likes': review.likes})
+
+@app.route('/admin/reviews')
+@admin_required
+def admin_reviews():
+    """Админ-панель для управления отзывами (просмотр и удаление)"""
+    all_reviews = Review.query.order_by(Review.created_at.desc()).all()
+    return render_template('admin/reviews.html', reviews=all_reviews)
+
+@app.route('/admin/reviews/delete/<int:id>')
+@admin_required
+def admin_delete_review(id):
+    """Удаление отзыва"""
+    review = Review.query.get_or_404(id)
+    db.session.delete(review)
+    db.session.commit()
+    return redirect(url_for('admin_reviews'))
+
 @app.route('/schedule')
 def schedule():
     """Страница расписания"""
